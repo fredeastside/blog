@@ -1,0 +1,27 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+    <!-- if the user has javascript disabled they can still use the menu -->
+    <noscript>
+        <div class="no-js-menu clearfix">
+            <ul>
+
+                <li><i class="fa fa-home"></i><a href="/demo/writer/jekyll/v1-3/">Home</a></li>
+
+                <li><i class="fa fa-home"></i><a href="/demo/writer/jekyll/v1-3/home-alt">Home Alt</a></li>
+
+                <li><i class="fa fa-home"></i><a href="/demo/writer/jekyll/v1-3/home-alt-2/">Home Alt 2</a></li>
+
+                <li><i class="fa fa-anchor"></i><a href="/demo/writer/jekyll/v1-3/about">About</a></li>
+
+                <li><i class="fa fa-plane"></i><a href="/demo/writer/jekyll/v1-3/contact">Contact</a></li>
+
+                <li><i class="fa fa-user"></i><a href="/demo/writer/jekyll/v1-3/author/michelle">Author</a></li>
+
+            </ul>
+        </div>
+    </noscript>
+    <!-- end no script -->
+    {% block content %}
+    {% endblock %}
+{% endblock %}

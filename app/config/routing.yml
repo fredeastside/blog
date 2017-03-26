@@ -1,0 +1,16 @@
+homepage:
+    path: /
+    methods: [GET]
+
+login:
+    path: /login
+    methods: [GET, POST]
+    defaults: { _controller: app.action.login }
+
+logout:
+    path: /logout
+    defaults: { _controller: app.action.logout }
+
+registration:
+    path: /registration
+    defaults: { _controller: app.action.registration }
