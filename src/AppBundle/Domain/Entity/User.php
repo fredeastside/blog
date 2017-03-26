@@ -11,7 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * Class User
  *
  * @package AppBundle\Domain\Entity
- * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\Domain\Repository\UserRepository")
  * @ORM\Table(name="user", indexes={ @ORM\Index(name="idx_email", columns={"email"}) })
  */
 class User implements UserInterface
@@ -25,7 +25,6 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string")
-     * @Assert\NotBlank()
      */
     private $name;
 

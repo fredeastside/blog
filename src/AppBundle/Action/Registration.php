@@ -48,7 +48,7 @@ final class Registration
         $form = $this->formFactory->create(RegistrationType::class);
 
         if ($this->handler->handle($form, $request)) {
-
+            //dump($form->getData());die;
         }
 
         return $responder($form);

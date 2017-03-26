@@ -21,7 +21,13 @@ class RegistrationTypeHandler implements TypeHandlerInterface
      */
     public function handle(FormInterface $form, Request $request) : bool
     {
-        if ($form->handleRequest($request)) {
+        if (!$request->isMethod('POST')) {
+            return false;
+        }
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
             return true;
         }
 
