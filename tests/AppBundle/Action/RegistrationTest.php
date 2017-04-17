@@ -2,7 +2,9 @@
 
 namespace AppBundle\Action;
 
+use Symfony\Bundle\FrameworkBundle\Routing\Router;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class RegistrationTest
@@ -11,14 +13,26 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
  */
 class RegistrationTest extends WebTestCase
 {
+    /** @var Router */
+    private $router;
+    private $client;
+
+    /**
+     * @test
+     */
+    public function setUp()
+    {
+        $this->client = static::createClient();
+        $this->router = $this->client->getContainer()->get('router');
+    }
     /**
      * @test
      */
     public function testPage()
     {
         $client = static::createClient();
-        $crawler = $client->request('GET', '/registration');
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $crawler = $client->request('GET', $this->router->generate('registration'));
+        $this->assertEquals(Response::HTTP_OK, $client->getResponse()->getStatusCode());
         $this->assertContains('Регистрация', $crawler->filter('.container h3')->text());
     }
 
@@ -28,7 +42,7 @@ class RegistrationTest extends WebTestCase
     public function testForm()
     {
         $client = static::createClient();
-        $crawler = $client->request('POST', '/registration', [
+        $crawler = $client->request('POST', $this->router->generate('registration'), [
             'registration' => [
                 'email' => 'test@test.test',
                 'plainPassword' => [
@@ -37,7 +51,7 @@ class RegistrationTest extends WebTestCase
                 ],
             ],
         ]);
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertEquals(Response::HTTP_OK, $client->getResponse()->getStatusCode());
         $this->assertContains('Регистрация', $crawler->filter('.container h3')->text());
     }
 }
