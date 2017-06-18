@@ -7,6 +7,7 @@ use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoder;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
@@ -26,14 +27,14 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
     /**
      * LoginFormAuthenticator constructor.
      *
-     * @param RouterInterface      $router
-     * @param FormFactoryInterface $formFactory
-     * @param UserPasswordEncoder  $passwordEncoder
+     * @param RouterInterface              $router
+     * @param FormFactoryInterface         $formFactory
+     * @param UserPasswordEncoderInterface $passwordEncoder
      */
     public function __construct(
         RouterInterface $router,
         FormFactoryInterface $formFactory,
-        UserPasswordEncoder $passwordEncoder
+        UserPasswordEncoderInterface $passwordEncoder
     ) {
         $this->router = $router;
         $this->formFactory = $formFactory;

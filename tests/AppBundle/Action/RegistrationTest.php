@@ -52,6 +52,6 @@ class RegistrationTest extends WebTestCase
             ],
         ]);
         $this->assertEquals(Response::HTTP_OK, $client->getResponse()->getStatusCode());
-        $this->assertContains('Регистрация', $crawler->filter('.container h3')->text());
+        $this->assertContains('Успешно', $crawler->filter('.container h3')->text());
     }
 }

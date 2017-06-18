@@ -44,14 +44,12 @@ final class Login
      */
     public function __invoke(Request $request) : Response
     {
-        $responder = $this->responder;
-
         $error = $this->authenticationUtils->getLastAuthenticationError();
 
         $form = $this->formFactory->create(LoginType::class, [
             '_username' => $this->authenticationUtils->getLastUsername(),
         ]);
 
-        return $responder($error, $form);
+        return ($this->responder)($error, $form);
     }
 }

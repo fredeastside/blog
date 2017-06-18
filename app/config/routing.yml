@@ -5,12 +5,12 @@ homepage:
 login:
     path: /login
     methods: [GET, POST]
-    defaults: { _controller: app.action.login }
+    defaults: { _controller: AppBundle\Action\Login }
 
 logout:
     path: /logout
-    defaults: { _controller: app.action.logout }
+    defaults: { _controller: AppBundle\Action\Logout }
 
 registration:
     path: /registration
-    defaults: { _controller: app.action.registration }
+    defaults: { _controller: AppBundle\Action\Registration }
