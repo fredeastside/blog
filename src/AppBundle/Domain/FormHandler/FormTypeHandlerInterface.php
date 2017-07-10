@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Domain\Interfaces\Form;
+namespace AppBundle\Domain\FormHandler;
 
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
  *
  * @package AppBundle\Interfaces\Form
  */
-interface TypeHandlerInterface
+interface FormTypeHandlerInterface
 {
     /**
      * @param FormInterface $form

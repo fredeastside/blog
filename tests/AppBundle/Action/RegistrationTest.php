@@ -2,8 +2,7 @@
 
 namespace AppBundle\Action;
 
-use Symfony\Bundle\FrameworkBundle\Routing\Router;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use App\Test\AppTestCase;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -11,38 +10,47 @@ use Symfony\Component\HttpFoundation\Response;
  *
  * @package AppBundle\Action
  */
-class RegistrationTest extends WebTestCase
+class RegistrationTest extends AppTestCase
 {
-    /** @var Router */
-    private $router;
-    private $client;
-
     /**
      * @test
      */
-    public function setUp()
+    public function check_page()
     {
-        $this->client = static::createClient();
-        $this->router = $this->client->getContainer()->get('router');
-    }
-    /**
-     * @test
-     */
-    public function testPage()
-    {
-        $client = static::createClient();
-        $crawler = $client->request('GET', $this->router->generate('registration'));
-        $this->assertEquals(Response::HTTP_OK, $client->getResponse()->getStatusCode());
+        $crawler = $this->client->request('GET', $this->router->generate('registration'));
+        $this->assertEquals(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
         $this->assertContains('Регистрация', $crawler->filter('.container h3')->text());
     }
 
     /**
      * @test
+     * @dataProvider wrongData
+     *
+     * @param mixed $email
+     * @param mixed $password
+     * @param mixed $message
      */
-    public function testForm()
+    public function try_registration_with_wrong_data($email, $password, $message)
     {
-        $client = static::createClient();
-        $crawler = $client->request('POST', $this->router->generate('registration'), [
+        $crawler = $this->client->request('GET', $this->router->generate('registration'));
+        $form = $crawler->selectButton('Зарегистрироваться')->form([
+            'registration' => [
+                'email' => $email,
+                'plainPassword' => $password,
+            ],
+        ]);
+        $crawler = $this->client->submit($form);
+        $this->assertEquals(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
+        $this->assertContains($message, $crawler->filter('.container .has-error')->text());
+    }
+
+    /**
+     * @test
+     */
+    public function check_success_registration()
+    {
+        $crawler = $this->client->request('GET', $this->router->generate('registration'));
+        $form = $crawler->selectButton('Зарегистрироваться')->form([
             'registration' => [
                 'email' => 'test@test.test',
                 'plainPassword' => [
@@ -51,7 +59,58 @@ class RegistrationTest extends WebTestCase
                 ],
             ],
         ]);
-        $this->assertEquals(Response::HTTP_OK, $client->getResponse()->getStatusCode());
+        $crawler = $this->client->submit($form);
+        $this->assertEquals(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
         $this->assertContains('Успешно', $crawler->filter('.container h3')->text());
+    }
+
+    /**
+     * @return array
+     */
+    public function wrongData()
+    {
+        return [
+            [
+                '',
+                [],
+                'Значение не должно быть пустым.',
+            ],
+            [
+                '123',
+                [],
+                'Значение адреса электронной почты недопустимо.',
+            ],
+            [
+                'test@test.test',
+                [
+                    'first' => '',
+                ],
+                'Значение не должно быть пустым.',
+            ],
+            [
+                'test@test.test',
+                [
+                    'first' => '',
+                    'second' => '',
+                ],
+                'Значение не должно быть пустым.',
+            ],
+            [
+                'test@test.test',
+                [
+                    'first' => '123',
+                    'second' => '456',
+                ],
+                'Значение недопустимо',
+            ],
+            [
+                'test',
+                [
+                    'first' => '123',
+                    'second' => '123',
+                ],
+                'Значение адреса электронной почты недопустимо.',
+            ],
+        ];
     }
 }

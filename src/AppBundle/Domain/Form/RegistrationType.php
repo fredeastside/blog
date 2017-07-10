@@ -2,7 +2,7 @@
 
 namespace AppBundle\Domain\Form;
 
-use AppBundle\Domain\Entity\User;
+use AppBundle\Domain\DataTransferObject\UserRegistration;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
@@ -50,7 +50,7 @@ class RegistrationType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => User::class,
+            'data_class' => UserRegistration::class,
         ]);
     }
 }

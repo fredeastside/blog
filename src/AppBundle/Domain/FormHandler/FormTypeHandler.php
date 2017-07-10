@@ -2,7 +2,6 @@
 
 namespace AppBundle\Domain\FormHandler;
 
-use AppBundle\Domain\Interfaces\Form\TypeHandlerInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -11,7 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
  *
  * @package AppBundle\FormHandler
  */
-class RegistrationTypeHandler implements TypeHandlerInterface
+class FormTypeHandler implements FormTypeHandlerInterface
 {
     /**
      * @param FormInterface $form
@@ -21,13 +20,9 @@ class RegistrationTypeHandler implements TypeHandlerInterface
      */
     public function handle(FormInterface $form, Request $request) : bool
     {
-        if (!$request->isMethod('POST')) {
-            return false;
-        }
-
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             return true;
         }
 

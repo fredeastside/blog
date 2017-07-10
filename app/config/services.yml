@@ -7,9 +7,9 @@ services:
         autoconfigure: true
         public: false
 
-    AppBundle\:
-        resource: '../../src/AppBundle/*'
-        exclude: '../../src/AppBundle/{Entity,Repository}'
+#    AppBundle\:
+#        resource: '../../src/AppBundle/*'
+#        exclude: '../../src/AppBundle/Domain/{Entity,Repository}'
 
     # actions
     AppBundle\Action\Login:
@@ -30,7 +30,18 @@ services:
         public: true
 
     # form handlers
-    AppBundle\Domain\FormHandler\RegistrationTypeHandler: ~
+    AppBundle\Domain\FormHandler\FormTypeHandler: ~
 
     # security
     AppBundle\Domain\Security\LoginFormAuthenticator: ~
+
+    # repositories
+    AppBundle\Domain\Repository\UserRepository:
+        factory: ['@doctrine.orm.entity_manager', getRepository]
+        arguments:
+            - 'AppBundle:User'
+
+    # listeners
+    AppBundle\Domain\Doctrine\HashPasswordListener:
+        tags:
+            - { name: doctrine.event_subscriber }

@@ -2,8 +2,8 @@
 
 namespace AppBundle\Domain\Repository;
 
+use App\Domain\UserRepositoryInterface;
 use AppBundle\Domain\Entity\User;
-use AppBundle\Domain\Interfaces\Repository\UserRepositoryInterface;
 use Doctrine\ORM\EntityRepository;
 
 /**
@@ -14,7 +14,7 @@ use Doctrine\ORM\EntityRepository;
 class UserRepository extends EntityRepository implements UserRepositoryInterface
 {
     /**
-     * @param $id
+     * @param int $id
      *
      * @return mixed
      */
@@ -25,21 +25,10 @@ class UserRepository extends EntityRepository implements UserRepositoryInterface
 
     /**
      * @param User $user
-     *
-     * @return mixed
      */
-    public function add(User $user)
+    public function save(User $user)
     {
         $this->getEntityManager()->persist($user);
-    }
-
-    /**
-     * @param User $user
-     *
-     * @return void
-     */
-    public function remove(User $user) : void
-    {
-        $this->getEntityManager()->remove($user);
+        $this->getEntityManager()->flush();
     }
 }
