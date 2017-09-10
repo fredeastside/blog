@@ -2,11 +2,6 @@
 
 namespace AppBundle\Domain\Entity;
 
-/**
- * Class Role
- *
- * @package AppBundle\Domain\Entity
- */
 class Role
 {
     const ROLE_USER = 'ROLE_USER';

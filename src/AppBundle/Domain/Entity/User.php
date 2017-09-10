@@ -8,8 +8,6 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
- * Class User
- *
  * @ORM\Entity(repositoryClass="AppBundle\Domain\Repository\UserRepository")
  * @ORM\Table(name="user", indexes={ @ORM\Index(name="idx_email", columns={"email"}) })
  */

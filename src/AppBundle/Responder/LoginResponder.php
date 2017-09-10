@@ -7,34 +7,18 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Templating\EngineInterface;
 
-/**
- * Class LoginResponder
- *
- * @package AppBundle\Responder
- */
 class LoginResponder
 {
-    private $engine;
+    private $templateEngine;
 
-    /**
-     * LoginResponder constructor.
-     *
-     * @param EngineInterface $engine
-     */
-    public function __construct(EngineInterface $engine)
+    public function __construct(EngineInterface $templateEngine)
     {
-        $this->engine = $engine;
+        $this->templateEngine = $templateEngine;
     }
 
-    /**
-     * @param null|AuthenticationException $error
-     * @param FormInterface                $form
-     *
-     * @return Response
-     */
     public function __invoke(?AuthenticationException $error, FormInterface $form) : Response
     {
-        return new Response($this->engine->render(':login:login.html.twig', [
+        return new Response($this->templateEngine->render(':login:login.html.twig', [
             'form' => $form->createView(),
             'error' => $error,
         ]));
