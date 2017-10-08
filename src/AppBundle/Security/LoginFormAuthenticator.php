@@ -1,8 +1,9 @@
 <?php
 
-namespace AppBundle\Domain\Security;
+namespace AppBundle\Security;
 
-use AppBundle\Domain\Form\LoginType;
+use AppBundle\Command\UserLogin;
+use AppBundle\Form\LoginType;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\RouterInterface;
@@ -36,11 +37,12 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
 
         $form = $this->formFactory->create(LoginType::class);
         $form->handleRequest($request);
+        /** @var UserLogin $data */
         $data = $form->getData();
 
         $request->getSession()->set(
             Security::LAST_USERNAME,
-            $data['_username']
+            $data->username ?? null
         );
 
         return $data;
@@ -48,14 +50,12 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
 
     public function getUser($credentials, UserProviderInterface $userProvider)
     {
-        return $userProvider->loadUserByUsername($credentials['_username']);
+        return $userProvider->loadUserByUsername($credentials->username);
     }
 
     public function checkCredentials($credentials, UserInterface $user)
     {
-        $password = $credentials['_password'];
-
-        if ($this->passwordEncoder->isPasswordValid($user, $password)) {
+        if ($this->passwordEncoder->isPasswordValid($user, $credentials->password)) {
             return true;
         }
 
@@ -64,7 +64,7 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
 
     public function getDefaultSuccessRedirectUrl()
     {
-        return $this->router->generate('homepage');
+        return $this->router->generate('homepage_index');
     }
 
     protected function getLoginUrl()

@@ -2,7 +2,7 @@
 
 namespace App\Domain;
 
-use AppBundle\Domain\Entity\User;
+use AppBundle\Entity\User;
 
 interface UserRepositoryInterface
 {

@@ -1,14 +1,14 @@
 <?php
 
-namespace AppBundle\Domain\Entity;
+namespace AppBundle\Entity;
 
 use AppBundle\Domain\DataTransferObject\UserRegistration;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Mapping\Annotation as Gedmo;
+use Gedmo\Mapping\Annotation\Timestampable;
 
 /**
- * @ORM\Entity(repositoryClass="AppBundle\Domain\Repository\UserRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
  * @ORM\Table(name="user", indexes={ @ORM\Index(name="idx_email", columns={"email"}) })
  */
 class User implements UserInterface
@@ -43,13 +43,13 @@ class User implements UserInterface
     private $plainPassword;
 
     /**
-     * @Gedmo\Timestampable(on="create")
+     * @Timestampable(on="create")
      * @ORM\Column(type="datetime")
      */
     private $created;
 
     /**
-     * @Gedmo\Timestampable(on="update")
+     * @Timestampable(on="update")
      * @ORM\Column(type="datetime")
      */
     private $updated;
@@ -60,7 +60,7 @@ class User implements UserInterface
      * @param string $email
      * @param string $password
      */
-    public function __construct(string $email, string $password)
+    private function __construct(string $email, string $password)
     {
         $this->email = $email;
         $this->plainPassword = $password;

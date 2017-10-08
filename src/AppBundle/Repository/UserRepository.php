@@ -1,9 +1,9 @@
 <?php
 
-namespace AppBundle\Domain\Repository;
+namespace AppBundle\Repository;
 
 use App\Domain\UserRepositoryInterface;
-use AppBundle\Domain\Entity\User;
+use AppBundle\Entity\User;
 use Doctrine\ORM\EntityRepository;
 
 class UserRepository extends EntityRepository implements UserRepositoryInterface

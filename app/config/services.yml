@@ -7,41 +7,22 @@ services:
         autoconfigure: true
         public: false
 
-#    AppBundle\:
-#        resource: '../../src/AppBundle/*'
-#        exclude: '../../src/AppBundle/Domain/{Entity,Repository}'
-
-    # actions
-    AppBundle\Action\Login:
-        public: true
-
-    AppBundle\Action\Logout:
-        public: true
-
-    AppBundle\Action\Registration:
-        public: true
-
-    # responders
-
-    AppBundle\Responder\LoginResponder:
-        public: true
-
-    AppBundle\Responder\RegistrationResponder:
-        public: true
-
-    # form handlers
-    AppBundle\Domain\FormHandler\FormTypeHandler: ~
-
-    # security
-    AppBundle\Domain\Security\LoginFormAuthenticator: ~
+    AppBundle\:
+        resource: '../../src/AppBundle/*'
+        exclude: '../../src/AppBundle/{Entity,Repository}'
 
     # repositories
     AppBundle\Domain\Repository\UserRepository:
         factory: ['@doctrine.orm.entity_manager', getRepository]
         arguments:
+            - '@command_bus'
             - 'AppBundle:User'
 
     # listeners
-    AppBundle\Domain\Doctrine\HashPasswordListener:
+    AppBundle\EventListener\Doctrine\HashPasswordSubscriber:
         tags:
             - { name: doctrine.event_subscriber }
+
+#    AppBundle\Command\Handler\UserLoginHandler:
+#        tags:
+#            - { name: command_handler, handles: AppBundle\Command\UserLogin }

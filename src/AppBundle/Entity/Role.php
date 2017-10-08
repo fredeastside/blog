@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Domain\Entity;
+namespace AppBundle\Entity;
 
 class Role
 {

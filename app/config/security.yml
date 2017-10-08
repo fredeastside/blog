@@ -20,7 +20,7 @@ security:
             anonymous: ~
             guard:
                 authenticators:
-                    - AppBundle\Domain\Security\LoginFormAuthenticator
+                    - AppBundle\Security\LoginFormAuthenticator
             remember_me:
                 secret:   '%secret%'
                 lifetime: 604800 # 1 week in seconds

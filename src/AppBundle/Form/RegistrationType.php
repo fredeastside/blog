@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Domain\Form;
+namespace AppBundle\Form;
 
 use AppBundle\Domain\DataTransferObject\UserRegistration;
 use Symfony\Component\Form\AbstractType;

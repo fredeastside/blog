@@ -1,44 +1,30 @@
 <?php
 
-namespace AppBundle\Domain\Doctrine;
+namespace AppBundle\EventListener\Doctrine;
 
-use AppBundle\Domain\Entity\User;
+use AppBundle\Entity\User;
 use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Events;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoder;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
-/**
- * Class HashPasswordListener
- *
- * @package AppBundle\Domain\Doctrine
- */
-class HashPasswordListener implements EventSubscriber
+class HashPasswordSubscriber implements EventSubscriber
 {
-    /**
-     * @var UserPasswordEncoder
-     */
     private $passwordEncoder;
 
-    /**
-     * HashPasswordListener constructor.
-     *
-     * @param UserPasswordEncoder $passwordEncoder
-     */
-    public function __construct(UserPasswordEncoder $passwordEncoder)
+    public function __construct(UserPasswordEncoderInterface $passwordEncoder)
     {
         $this->passwordEncoder = $passwordEncoder;
     }
 
-    /**
-     * @param LifecycleEventArgs $args
-     */
     public function prePersist(LifecycleEventArgs $args)
     {
         $entity = $args->getEntity();
+
         if (!$entity instanceof User) {
             return;
         }
+
         $this->encodePassword($entity);
     }
 
@@ -48,9 +34,11 @@ class HashPasswordListener implements EventSubscriber
     public function preUpdate(LifecycleEventArgs $args)
     {
         $entity = $args->getEntity();
+
         if (!$entity instanceof User) {
             return;
         }
+
         $this->encodePassword($entity);
         $em = $args->getEntityManager();
         $meta = $em->getClassMetadata(get_class($entity));
@@ -75,10 +63,12 @@ class HashPasswordListener implements EventSubscriber
         if (!$entity->getPlainPassword()) {
             return;
         }
+
         $encoded = $this->passwordEncoder->encodePassword(
             $entity,
             $entity->getPlainPassword()
         );
+
         $entity->encodePassword($encoded);
     }
 }
