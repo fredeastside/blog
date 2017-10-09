@@ -2,7 +2,7 @@
 
 namespace AppBundle\Action;
 
-use App\Domain\UserRepositoryInterface;
+use App\Domain\UserRepository;
 use AppBundle\Domain\Entity\User;
 use AppBundle\Domain\Form\RegistrationType;
 use AppBundle\Domain\FormHandler\FormTypeHandlerInterface;
@@ -25,7 +25,7 @@ final class Registration
      */
     private $handler;
     /**
-     * @var UserRepositoryInterface
+     * @var UserRepository
      */
     private $repository;
 
@@ -35,9 +35,9 @@ final class Registration
      * @param FormFactoryInterface     $formFactory
      * @param RegistrationResponder    $responder
      * @param FormTypeHandlerInterface $handler
-     * @param UserRepositoryInterface  $repository
+     * @param UserRepository           $repository
      */
-    public function __construct(FormFactoryInterface $formFactory, RegistrationResponder $responder, FormTypeHandlerInterface $handler, UserRepositoryInterface $repository)
+    public function __construct(FormFactoryInterface $formFactory, RegistrationResponder $responder, FormTypeHandlerInterface $handler, UserRepository $repository)
     {
         $this->formFactory = $formFactory;
         $this->responder = $responder;

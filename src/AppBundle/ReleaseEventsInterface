@@ -1,8 +1,0 @@
-<?php
-
-namespace ApiBundle\Entity\Interfaces;
-
-interface ReleaseEventsInterface
-{
-    public function releaseEvents(): array;
-}

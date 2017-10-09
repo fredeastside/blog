@@ -1,10 +1,10 @@
 <?php
 
-namespace ApiBundle\Entity\Traits;
+namespace AppBundle\Common\Event;
 
 use Symfony\Component\EventDispatcher\Event;
 
-trait EventTrait
+trait DomainEvents
 {
     private $events = [];
 

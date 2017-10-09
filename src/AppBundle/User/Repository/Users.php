@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Domain;
+namespace AppBundle\User\Repository;
 
 use AppBundle\Entity\User;
 
-interface UserRepositoryInterface
+interface Users
 {
     public function findById($id);
 

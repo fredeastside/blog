@@ -9,17 +9,16 @@ services:
 
     AppBundle\:
         resource: '../../src/AppBundle/*'
-        exclude: '../../src/AppBundle/{Entity,Repository}'
+        exclude: '../../src/AppBundle/{Common,User}'
 
     # repositories
     AppBundle\Domain\Repository\UserRepository:
         factory: ['@doctrine.orm.entity_manager', getRepository]
         arguments:
-            - '@command_bus'
             - 'AppBundle:User'
 
     # listeners
-    AppBundle\EventListener\Doctrine\HashPasswordSubscriber:
+    AppBundle\Common\EventListener\Doctrine\HashPasswordSubscriber:
         tags:
             - { name: doctrine.event_subscriber }
 
@@ -27,6 +26,6 @@ services:
 #        tags:
 #            - { name: command_handler, handles: AppBundle\Command\UserLogin }
 
-    AppBundle\EventListener\Doctrine\ReleaseEventsSubscriber
+    AppBundle\Common\EventListener\Doctrine\DomainEventsSubscriber:
         tags:
             - { name: doctrine.event_subscriber }

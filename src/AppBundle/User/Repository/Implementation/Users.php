@@ -1,12 +1,11 @@
 <?php
 
-namespace AppBundle\Repository;
+namespace AppBundle\User\Repository\Implementation;
 
-use App\Domain\UserRepositoryInterface;
+use AppBundle\User\Repository\Users as UsersInterface;
 use AppBundle\Entity\User;
-use Doctrine\ORM\EntityRepository;
 
-class UserRepository extends EntityRepository implements UserRepositoryInterface
+class Users implements UsersInterface
 {
     public function findById($id)
     {

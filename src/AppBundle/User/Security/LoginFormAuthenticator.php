@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Security;
+namespace AppBundle\User\Security;
 
 use AppBundle\Command\UserLogin;
 use AppBundle\Form\LoginType;

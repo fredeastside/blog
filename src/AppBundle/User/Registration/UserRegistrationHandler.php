@@ -2,7 +2,7 @@
 
 namespace AppBundle\Domain\Handler;
 
-use App\Domain\UserRepositoryInterface;
+use App\Domain\UserRepository;
 use AppBundle\Domain\DataTransferObject\UserRegistration;
 use AppBundle\Domain\Entity\User;
 
@@ -10,7 +10,7 @@ class UserRegistrationHandler
 {
     private $repository;
 
-    public function __construct(UserRepositoryInterface $repository)
+    public function __construct(UserRepository $repository)
     {
         $this->repository = $repository;
     }
