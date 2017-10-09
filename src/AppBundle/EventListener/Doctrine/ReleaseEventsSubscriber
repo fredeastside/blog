@@ -1,0 +1,55 @@
+<?php
+
+namespace AppBundle\EventListener\Doctrine;
+
+use AppBundle\Entity\Interfaces\ReleaseEventsInterface;
+use AppBundle\Service\Events\EventDispatcherDecoratorInterface;
+use Doctrine\Common\EventSubscriber;
+use Doctrine\ORM\Event\OnFlushEventArgs;
+use Doctrine\ORM\Events;
+use Doctrine\ORM\Event\PostFlushEventArgs;
+
+class ReleaseEventsSubscriber implements EventSubscriber
+{
+    private $eventDispatcher;
+    private $releaseEventsItems = [];
+
+    public function __construct(EventDispatcherDecoratorInterface $eventDispatcher)
+    {
+        $this->eventDispatcher = $eventDispatcher;
+    }
+
+    public function getSubscribedEvents()
+    {
+        return [
+            Events::onFlush,
+            Events::postFlush,
+        ];
+    }
+
+    public function onFlush(OnFlushEventArgs $eventArgs)
+    {
+        $em = $eventArgs->getEntityManager();
+        $uow = $em->getUnitOfWork();
+
+        $this->addInReleaseEventsItems($uow->getScheduledEntityInsertions());
+        $this->addInReleaseEventsItems($uow->getScheduledEntityUpdates());
+        $this->addInReleaseEventsItems($uow->getScheduledEntityDeletions());
+    }
+
+    public function postFlush(PostFlushEventArgs $args)
+    {
+        foreach ($this->releaseEventsItems as $releaseEventsItem) {
+            $this->eventDispatcher->dispatch($releaseEventsItem->releaseEvents());
+        }
+    }
+
+    private function addInReleaseEventsItems($entities)
+    {
+        foreach ($entities as $entity) {
+            if ($entity instanceof ReleaseEventsInterface) {
+                $this->releaseEventsItems[] = $entity;
+            }
+        }
+    }
+}
