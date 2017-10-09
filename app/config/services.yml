@@ -26,3 +26,7 @@ services:
 #    AppBundle\Command\Handler\UserLoginHandler:
 #        tags:
 #            - { name: command_handler, handles: AppBundle\Command\UserLogin }
+
+    AppBundle\EventListener\Doctrine\ReleaseEventsSubscriber
+        tags:
+            - { name: doctrine.event_subscriber }
