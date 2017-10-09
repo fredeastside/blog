@@ -1,0 +1,38 @@
+<?php
+
+namespace ApiBundle\Entity\Traits;
+
+use Symfony\Component\EventDispatcher\Event;
+
+trait EventTrait
+{
+    private $events = [];
+
+    /**
+     * @param string $eventName
+     * @param Event  $event
+     */
+    private function addEvent(string $eventName, Event $event)
+    {
+        if ($this->hasEvent($eventName)) {
+            return;
+        }
+        $this->events[$eventName] = $event;
+    }
+
+    /**
+     * @return Event[]
+     */
+    public function releaseEvents(): array
+    {
+        $events = $this->events;
+        $this->events = [];
+
+        return $events;
+    }
+
+    private function hasEvent(string $key)
+    {
+        return isset($this->events[$key]);
+    }
+}
