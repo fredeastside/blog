@@ -3,7 +3,7 @@
 namespace AppBundle\Common\EventListener\Doctrine;
 
 use AppBundle\Common\Event\DomainEventsPublisher;
-use AppBundle\Service\Events\EventDispatcherDecoratorInterface;
+use AppBundle\Common\Event\EventDispatcher;
 use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\Event\OnFlushEventArgs;
 use Doctrine\ORM\Events;
@@ -12,9 +12,10 @@ use Doctrine\ORM\Event\PostFlushEventArgs;
 class DomainEventsSubscriber implements EventSubscriber
 {
     private $eventDispatcher;
-    private $releaseEventsItems = [];
+    /** @var DomainEventsPublisher[] */
+    private $entities = [];
 
-    public function __construct(EventDispatcherDecoratorInterface $eventDispatcher)
+    public function __construct(EventDispatcher $eventDispatcher)
     {
         $this->eventDispatcher = $eventDispatcher;
     }
@@ -39,17 +40,18 @@ class DomainEventsSubscriber implements EventSubscriber
 
     public function postFlush(PostFlushEventArgs $args)
     {
-        foreach ($this->releaseEventsItems as $releaseEventsItem) {
-            $this->eventDispatcher->dispatch($releaseEventsItem->releaseEvents());
+        foreach ($this->entities as $entity) {
+            $this->eventDispatcher->dispatch($entity->releaseEvents());
         }
     }
 
     private function addInReleaseEventsItems($entities)
     {
         foreach ($entities as $entity) {
-            if ($entity instanceof DomainEventsPublisher) {
-                $this->releaseEventsItems[] = $entity;
+            if (!$entity instanceof DomainEventsPublisher) {
+                continue;
             }
+            $this->entities[] = $entity;
         }
     }
 }

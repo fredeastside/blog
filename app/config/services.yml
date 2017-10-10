@@ -9,7 +9,7 @@ services:
 
     AppBundle\:
         resource: '../../src/AppBundle/*'
-        exclude: '../../src/AppBundle/{Common,User}'
+#        exclude: '../../src/AppBundle/{Entity, Repository}'
 
     # repositories
     AppBundle\Domain\Repository\UserRepository:
@@ -22,9 +22,10 @@ services:
         tags:
             - { name: doctrine.event_subscriber }
 
-#    AppBundle\Command\Handler\UserLoginHandler:
-#        tags:
-#            - { name: command_handler, handles: AppBundle\Command\UserLogin }
+    AppBundle\User\Registration\Handler\UserRegistration:
+        public: true
+        tags:
+            - { name: command_handler, handles: AppBundle\User\Registration\Command\UserRegistration }
 
     AppBundle\Common\EventListener\Doctrine\DomainEventsSubscriber:
         tags:

@@ -2,8 +2,8 @@
 
 namespace AppBundle\User\Security;
 
-use AppBundle\Command\UserLogin;
-use AppBundle\Form\LoginType;
+use AppBundle\User\Login\Command\UserLogin;
+use AppBundle\User\Login\Form\LoginType;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\RouterInterface;
@@ -31,19 +31,12 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
 
     public function getCredentials(Request $request)
     {
-        if (!$request->isMethod('POST') && $request->getPathInfo() !== $this->router->generate('login')) {
+        if ($this->isNotPost($request) || $this->isNotLoginRoute($request)) {
             return null;
         }
 
-        $form = $this->formFactory->create(LoginType::class);
-        $form->handleRequest($request);
-        /** @var UserLogin $data */
-        $data = $form->getData();
-
-        $request->getSession()->set(
-            Security::LAST_USERNAME,
-            $data->username ?? null
-        );
+        $data = $this->getLoginFormData($request);
+        $request->getSession()->set(Security::LAST_USERNAME, $data->username ?? null);
 
         return $data;
     }
@@ -70,5 +63,25 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
     protected function getLoginUrl()
     {
         return $this->router->generate('login');
+    }
+
+    private function isNotPost(Request $request): bool
+    {
+        return !$request->isMethod('POST');
+    }
+
+    private function isNotLoginRoute(Request $request): bool
+    {
+        return $request->getPathInfo() !== $this->router->generate('login');
+    }
+
+    private function getLoginFormData(Request $request): UserLogin
+    {
+        $form = $this->formFactory->create(LoginType::class);
+        $form->handleRequest($request);
+        /** @var UserLogin $data */
+        $data = $form->getData();
+
+        return $data;
     }
 }

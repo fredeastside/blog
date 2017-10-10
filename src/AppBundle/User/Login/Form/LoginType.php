@@ -1,8 +1,8 @@
 <?php
 
-namespace AppBundle\Form;
+namespace AppBundle\User\Login\Form;
 
-use AppBundle\Command\UserLogin;
+use AppBundle\User\Login\Command\UserLogin;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;

@@ -2,8 +2,8 @@
 
 namespace AppBundle\User\Repository\Implementation;
 
+use AppBundle\User\Entity\User;
 use AppBundle\User\Repository\Users as UsersInterface;
-use AppBundle\Entity\User;
 
 class Users implements UsersInterface
 {

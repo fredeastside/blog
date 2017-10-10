@@ -2,7 +2,7 @@
 
 namespace AppBundle\User\Repository;
 
-use AppBundle\Entity\User;
+use AppBundle\User\Entity\User;
 
 interface Users
 {

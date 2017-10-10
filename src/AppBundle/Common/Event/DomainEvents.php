@@ -9,18 +9,6 @@ trait DomainEvents
     private $events = [];
 
     /**
-     * @param string $eventName
-     * @param Event  $event
-     */
-    private function addEvent(string $eventName, Event $event)
-    {
-        if ($this->hasEvent($eventName)) {
-            return;
-        }
-        $this->events[$eventName] = $event;
-    }
-
-    /**
      * @return Event[]
      */
     public function releaseEvents(): array
@@ -29,6 +17,14 @@ trait DomainEvents
         $this->events = [];
 
         return $events;
+    }
+
+    private function addEvent(Event $event)
+    {
+        if ($this->hasEvent(get_class($event))) {
+            return;
+        }
+        $this->events[get_class($event)] = $event;
     }
 
     private function hasEvent(string $key)

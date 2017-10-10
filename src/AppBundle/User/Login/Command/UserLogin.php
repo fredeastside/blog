@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Command;
+namespace AppBundle\User\Login\Command;
 
 use Symfony\Component\Validator\Constraints\NotBlank;
 

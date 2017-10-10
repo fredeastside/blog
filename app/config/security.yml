@@ -9,7 +9,7 @@ security:
 
     providers:
         main:
-            entity: { class: AppBundle\Entity\User, property: email }
+            entity: { class: AppBundle\User\Entity\User, property: email }
 
     firewalls:
         dev:

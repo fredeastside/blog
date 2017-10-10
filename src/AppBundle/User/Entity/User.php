@@ -1,42 +1,49 @@
 <?php
 
-namespace AppBundle\Entity;
+namespace AppBundle\User\Entity;
 
 use AppBundle\Domain\DataTransferObject\UserRegistration;
 use Symfony\Component\Security\Core\User\UserInterface;
-use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\{
+    Entity,
+    Table,
+    Index,
+    Id,
+    GeneratedValue,
+    Column
+};
 use Gedmo\Mapping\Annotation\Timestampable;
 
 /**
- * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
- * @ORM\Table(name="user", indexes={ @ORM\Index(name="idx_email", columns={"email"}) })
+ * @Entity()
+ * @Table(name="user", indexes={ @Index(name="idx_email", columns={"email"}) })
  */
 class User implements UserInterface
 {
     /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue(strategy="AUTO")
-     * @ORM\Column(type="integer")
+     * @Id()
+     * @GeneratedValue(strategy="AUTO")
+     * @Column(type="integer")
      */
     private $id;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
+     * @Column(type="string", nullable=true)
      */
     private $name;
 
     /**
-     * @ORM\Column(type="string", unique=true)
+     * @Column(type="string", unique=true)
      */
     private $email;
 
     /**
-     * @ORM\Column(type="json_array")
+     * @Column(type="json_array")
      */
     private $roles = [];
 
     /**
-     * @ORM\Column(type="string")
+     * @Column(type="string")
      */
     private $password;
 
@@ -44,13 +51,13 @@ class User implements UserInterface
 
     /**
      * @Timestampable(on="create")
-     * @ORM\Column(type="datetime")
+     * @Column(type="datetime")
      */
     private $created;
 
     /**
      * @Timestampable(on="update")
-     * @ORM\Column(type="datetime")
+     * @Column(type="datetime")
      */
     private $updated;
 
