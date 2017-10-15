@@ -46,7 +46,7 @@ class User implements UserInterface, Timestampable
     /**
      * @Column(type="json_array")
      */
-    private $roles;
+    private $roles = [];
 
     /**
      * @Column(type="string")
@@ -62,7 +62,6 @@ class User implements UserInterface, Timestampable
 
     private function __construct(string $email, string $password)
     {
-        $this->roles = new ArrayCollection();
         $this->posts = new ArrayCollection();
         $this->email = $email;
         $this->plainPassword = $password;
@@ -139,8 +138,8 @@ class User implements UserInterface, Timestampable
 
     private function addRole(string $role)
     {
-        if (!$this->roles->contains($role)) {
-            $this->roles->add($role);
+        if (!$this->hasRole($role)) {
+            array_push($this->roles, $role);
         }
 
         return $this;
@@ -148,10 +147,18 @@ class User implements UserInterface, Timestampable
 
     private function removeRole(string $role)
     {
-        if ($this->roles->contains($role)) {
-            $this->roles->removeElement($role);
+        if ($this->hasRole($role)) {
+            $key = array_search($role, $this->roles, true);
+            if ($key !== false) {
+                unset($this->roles[$key]);
+            }
         }
 
         return $this;
+    }
+
+    private function hasRole(string $role)
+    {
+        return in_array($role, $this->roles, true);
     }
 }
