@@ -2,24 +2,30 @@
 
 namespace AppBundle\User\Entity;
 
-use AppBundle\Domain\DataTransferObject\UserRegistration;
+use AppBundle\Common\Entity\Timestampable;
+use AppBundle\Common\Entity\Implementation\Timestampable as TimestampableTrait;
+use AppBundle\Common\Event\DomainEvents;
+use AppBundle\User\Registration\Command\UserRegistration;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Doctrine\ORM\Mapping\{
     Entity,
     Table,
-    Index,
     Id,
     GeneratedValue,
-    Column
+    Column,
+    OneToMany
 };
-use Gedmo\Mapping\Annotation\Timestampable;
 
 /**
  * @Entity()
- * @Table(name="user", indexes={ @Index(name="idx_email", columns={"email"}) })
+ * @Table(name="users")
  */
-class User implements UserInterface
+class User implements UserInterface, Timestampable
 {
+    use TimestampableTrait;
+    use DomainEvents;
+
     /**
      * @Id()
      * @GeneratedValue(strategy="AUTO")
@@ -40,7 +46,7 @@ class User implements UserInterface
     /**
      * @Column(type="json_array")
      */
-    private $roles = [];
+    private $roles;
 
     /**
      * @Column(type="string")
@@ -50,108 +56,62 @@ class User implements UserInterface
     private $plainPassword;
 
     /**
-     * @Timestampable(on="create")
-     * @Column(type="datetime")
+     * @OneToMany(targetEntity="AppBundle\Post\Entity\Post", mappedBy="user", cascade={"remove"})
      */
-    private $created;
+    private $posts;
 
-    /**
-     * @Timestampable(on="update")
-     * @Column(type="datetime")
-     */
-    private $updated;
-
-    /**
-     * User constructor.
-     *
-     * @param string $email
-     * @param string $password
-     */
     private function __construct(string $email, string $password)
     {
+        $this->roles = new ArrayCollection();
+        $this->posts = new ArrayCollection();
         $this->email = $email;
         $this->plainPassword = $password;
     }
 
-    /**
-     *
-     */
     public function getSalt()
     {
     }
 
-    /**
-     *
-     */
     public function eraseCredentials()
     {
         $this->plainPassword = null;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getId()
+    public function id()
     {
         return $this->id;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getName()
+    public function name()
     {
         return $this->name;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getEmail()
+    public function email()
     {
         return $this->email;
     }
 
-    /**
-     * @return array
-     */
     public function getRoles()
     {
-        $roles = $this->roles;
-        $roles[] = Role::ROLE_USER;
-
-        return array_unique($roles);
+        return $this->roles->toArray();
     }
 
-    /**
-     * @return mixed
-     */
     public function getPassword()
     {
         return $this->password;
     }
 
-    /**
-     * @return mixed
-     */
     public function getUsername()
     {
         return $this->email;
     }
 
-    /**
-     * @return string
-     */
     public function getPlainPassword()
     {
         return $this->plainPassword;
     }
 
-    /**
-     * @param string $hash
-     *
-     * @return $this
-     */
     public function encodePassword(string $hash)
     {
         $this->password = $hash;
@@ -159,13 +119,39 @@ class User implements UserInterface
         return $this;
     }
 
-    /**
-     * @param UserRegistration $registration
-     *
-     * @return User
-     */
-    public static function register(UserRegistration $registration)
+    public static function createFromRegistration(UserRegistration $registration)
     {
-        return new self($registration->email, $registration->plainPassword);
+        $user = new self($registration->email, $registration->plainPassword);
+        $user->toAuth();
+
+        return $user;
+    }
+
+    public function toAdmin()
+    {
+        $this->addRole(Role::ROLE_ADMIN);
+    }
+
+    private function toAuth()
+    {
+        $this->addRole(Role::ROLE_USER);
+    }
+
+    private function addRole(string $role)
+    {
+        if (!$this->roles->contains($role)) {
+            $this->roles->add($role);
+        }
+
+        return $this;
+    }
+
+    private function removeRole(string $role)
+    {
+        if ($this->roles->contains($role)) {
+            $this->roles->removeElement($role);
+        }
+
+        return $this;
     }
 }

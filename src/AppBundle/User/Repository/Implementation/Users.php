@@ -4,17 +4,33 @@ namespace AppBundle\User\Repository\Implementation;
 
 use AppBundle\User\Entity\User;
 use AppBundle\User\Repository\Users as UsersInterface;
+use Doctrine\Common\Persistence\ManagerRegistry;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 class Users implements UsersInterface
 {
-    public function findById($id)
+    private $em;
+    private $repository;
+
+    public function __construct(ManagerRegistry $managerRegistry)
     {
-        return $this->findOneBy(['id' => $id]);
+        $this->em = $managerRegistry->getManagerForClass($this->getEntityClass());
+        $this->repository = $managerRegistry->getRepository($this->getEntityClass());
     }
 
-    public function save(User $user)
+    public function findById($id)
     {
-        $this->getEntityManager()->persist($user);
-        $this->getEntityManager()->flush();
+        return $this->repository->findOneBy(['id' => $id]);
+    }
+
+    public function save(UserInterface $user)
+    {
+        $this->em->persist($user);
+        $this->em->flush();
+    }
+
+    public function getEntityClass()
+    {
+        return User::class;
     }
 }

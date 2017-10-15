@@ -7,6 +7,7 @@ use AppBundle\User\Login\Form\LoginType;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\RouterInterface;
+use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -58,6 +59,11 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
     public function getDefaultSuccessRedirectUrl()
     {
         return $this->router->generate('homepage_index');
+    }
+
+    public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
+    {
+        return parent::onAuthenticationSuccess($request, $token, $providerKey);
     }
 
     protected function getLoginUrl()

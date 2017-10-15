@@ -49,7 +49,10 @@ doctrine:
         dbname:   "%database_name%"
         user:     "%database_user%"
         password: "%database_password%"
-        charset:  UTF8
+        charset:  utf8mb4
+        default_table_options:
+            charset: utf8mb4
+            collate: utf8mb4_unicode_ci
         # if using pdo_sqlite as your database driver:
         #   1. add the path in parameters.yml
         #     e.g. database_path: "%kernel.root_dir%/../var/data/data.sqlite"
@@ -66,6 +69,24 @@ doctrine:
                 dir: "%kernel.root_dir%/../src/AppBundle/User/Entity"
                 prefix: AppBundle\User\Entity
                 alias: User
+                is_bundle: false
+            Category:
+                type: annotation
+                dir: "%kernel.root_dir%/../src/AppBundle/Category/Entity"
+                prefix: AppBundle\Category\Entity
+                alias: Category
+                is_bundle: false
+            Post:
+                type: annotation
+                dir: "%kernel.root_dir%/../src/AppBundle/Post/Entity"
+                prefix: AppBundle\Post\Entity
+                alias: Post
+                is_bundle: false
+            Tag:
+                type: annotation
+                dir: "%kernel.root_dir%/../src/AppBundle/Tag/Entity"
+                prefix: AppBundle\Tag\Entity
+                alias: Tag
                 is_bundle: false
 
 # Swiftmailer Configuration

@@ -2,11 +2,12 @@
 
 namespace AppBundle\User\Repository;
 
-use AppBundle\User\Entity\User;
+use AppBundle\Common\Repository\Repository;
+use Symfony\Component\Security\Core\User\UserInterface;
 
-interface Users
+interface Users extends Repository
 {
     public function findById($id);
 
-    public function save(User $user);
+    public function save(UserInterface $user);
 }
