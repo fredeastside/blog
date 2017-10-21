@@ -30,3 +30,7 @@ services:
     AppBundle\Common\EventListener\Doctrine\DomainEventsSubscriber:
         tags:
             - { name: doctrine.event_subscriber }
+
+    AppBundle\User\EventListener\SendActivationCodeSubscriber:
+        tags:
+            - { name: kernel.event_subscriber }

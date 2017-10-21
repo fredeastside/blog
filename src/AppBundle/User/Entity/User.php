@@ -2,9 +2,12 @@
 
 namespace AppBundle\User\Entity;
 
+use AppBundle\Common\Entity\Activated;
 use AppBundle\Common\Entity\Timestampable;
 use AppBundle\Common\Entity\Implementation\Timestampable as TimestampableTrait;
+use AppBundle\Common\Entity\Implementation\Activated as ActivatedTrait;
 use AppBundle\Common\Event\DomainEvents;
+use AppBundle\User\Event\SendActivationCode;
 use AppBundle\User\Registration\Command\UserRegistration;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -21,8 +24,9 @@ use Doctrine\ORM\Mapping\{
  * @Entity()
  * @Table(name="users")
  */
-class User implements UserInterface, Timestampable
+class User implements UserInterface, Timestampable, Activated
 {
+    use ActivatedTrait;
     use TimestampableTrait;
     use DomainEvents;
 
@@ -32,6 +36,11 @@ class User implements UserInterface, Timestampable
      * @Column(type="integer")
      */
     private $id;
+
+    /**
+     * @Column(type="string", nullable=true)
+     */
+    private $activationCode;
 
     /**
      * @Column(type="string", nullable=true)
@@ -122,6 +131,10 @@ class User implements UserInterface, Timestampable
     {
         $user = new self($registration->email, $registration->plainPassword);
         $user->toAuth();
+        $user->deactivate();
+        $activationCode = self::generateActivationCode();
+        $user->activationCode = $activationCode;
+        $user->addEvent(new SendActivationCode($user->email(), $activationCode));
 
         return $user;
     }
@@ -129,6 +142,11 @@ class User implements UserInterface, Timestampable
     public function toAdmin()
     {
         $this->addRole(Role::ROLE_ADMIN);
+    }
+
+    public static function generateActivationCode()
+    {
+        return md5(uniqid());
     }
 
     private function toAuth()
