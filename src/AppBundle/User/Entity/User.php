@@ -7,6 +7,7 @@ use AppBundle\Common\Entity\Timestampable;
 use AppBundle\Common\Entity\Implementation\Timestampable as TimestampableTrait;
 use AppBundle\Common\Entity\Implementation\Activated as ActivatedTrait;
 use AppBundle\Common\Event\DomainEvents;
+use AppBundle\Common\Event\DomainEventsPublisher;
 use AppBundle\User\Event\SendActivationCode;
 use AppBundle\User\Registration\Command\UserRegistration;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -24,7 +25,7 @@ use Doctrine\ORM\Mapping\{
  * @Entity()
  * @Table(name="users")
  */
-class User implements UserInterface, Timestampable, Activated
+class User implements UserInterface, Timestampable, Activated, DomainEventsPublisher
 {
     use ActivatedTrait;
     use TimestampableTrait;
@@ -102,7 +103,7 @@ class User implements UserInterface, Timestampable, Activated
 
     public function getRoles()
     {
-        return $this->roles->toArray();
+        return $this->roles;
     }
 
     public function getPassword()
@@ -142,6 +143,12 @@ class User implements UserInterface, Timestampable, Activated
     public function toAdmin()
     {
         $this->addRole(Role::ROLE_ADMIN);
+    }
+
+    public function activation()
+    {
+        $this->activate();
+        $this->activationCode = null;
     }
 
     public static function generateActivationCode()

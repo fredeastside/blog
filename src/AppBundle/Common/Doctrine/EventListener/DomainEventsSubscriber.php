@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Common\EventListener\Doctrine;
+namespace AppBundle\Common\Doctrine\EventListener;
 
 use AppBundle\Common\Event\DomainEventsPublisher;
 use AppBundle\Common\Event\EventDispatcher;

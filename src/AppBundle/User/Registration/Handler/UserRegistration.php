@@ -22,6 +22,6 @@ class UserRegistration
     {
         $user = User::createFromRegistration($registration);
         $this->users->save($user);
-        $this->authenticatorHandler->authenticateUserAndHandleSuccess($user);
+        //$this->authenticatorHandler->authenticateUserAndHandleSuccess($user);
     }
 }

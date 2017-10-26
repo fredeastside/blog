@@ -16,9 +16,10 @@ services:
         factory: ['@doctrine.orm.entity_manager', getRepository]
         arguments:
             - 'AppBundle:User'
+            - '@templating'
 
     # listeners
-    AppBundle\Common\EventListener\Doctrine\HashPasswordSubscriber:
+    AppBundle\Common\Doctrine\EventListener\HashPasswordSubscriber:
         tags:
             - { name: doctrine.event_subscriber }
 
@@ -27,10 +28,19 @@ services:
         tags:
             - { name: command_handler, handles: AppBundle\User\Registration\Command\UserRegistration }
 
-    AppBundle\Common\EventListener\Doctrine\DomainEventsSubscriber:
+    AppBundle\User\Registration\Handler\UserActivation:
+        public: true
+        tags:
+            - { name: command_handler, handles: AppBundle\User\Registration\Command\UserActivation }
+
+    AppBundle\Common\Doctrine\EventListener\DomainEventsSubscriber:
         tags:
             - { name: doctrine.event_subscriber }
 
     AppBundle\User\EventListener\SendActivationCodeSubscriber:
         tags:
             - { name: kernel.event_subscriber }
+
+#    AppBundle\Common\EventListener\RequestListener:
+#        tags:
+#            - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }

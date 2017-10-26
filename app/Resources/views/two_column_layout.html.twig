@@ -25,6 +25,11 @@
                 </div>
             </section><!-- end sidebar -->
             <div class="col-md-7 col-sm-12 col-md-offset-5 main-content">
+                {% for msg in app.session.flashBag.get('success') %}
+                    <div class="alert alert-success">
+                        {{ msg }}
+                    </div>
+                {% endfor %}
                 {% block content %}{% endblock %}
                 <footer class="split-footer">
                     <a href="/demo/writer/jekyll/v1-3/about">About</a>

@@ -2,16 +2,23 @@
 
 namespace AppBundle\Action;
 
-use App\Test\AppTestCase;
+use Doctrine\Common\DataFixtures\Purger\ORMPurger;
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Response;
 
-/**
- * Class RegistrationTest
- *
- * @package AppBundle\Action
- */
-class RegistrationTest extends AppTestCase
+class RegistrationTest extends WebTestCase
 {
+    private $client;
+    private $router;
+
+    protected function setUp()
+    {
+        $this->client = static::createClient();
+        $this->router = $this->client->getContainer()->get('router');
+        $purger = new ORMPurger($this->client->getContainer()->get('doctrine.orm.entity_manager'));
+        $purger->purge();
+    }
+
     /**
      * @test
      */
@@ -61,7 +68,7 @@ class RegistrationTest extends AppTestCase
         ]);
         $crawler = $this->client->submit($form);
         $this->assertEquals(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
-        $this->assertContains('Успешно', $crawler->filter('.container h3')->text());
+        $this->assertContains('На вашу почту отправлено письмо для активации аккаунта.', $crawler->filter('.container .main-content')->text());
     }
 
     /**

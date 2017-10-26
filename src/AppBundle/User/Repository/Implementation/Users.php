@@ -33,4 +33,19 @@ class Users implements UsersInterface
     {
         return User::class;
     }
+
+    public function findByEmail($email)
+    {
+        return $this->repository->findOneBy(['email' => $email]);
+    }
+
+    public function findByActivationCode($activationCode)
+    {
+        return $this->repository->findOneBy(['activationCode' => $activationCode]);
+    }
+
+    public function getManager()
+    {
+        return $this->em;
+    }
 }
