@@ -9,6 +9,7 @@ services:
 
     AppBundle\:
         resource: '../../src/AppBundle/*'
+        exclude: '../../src/AppBundle/{DataFixtures}'
 #        exclude: '../../src/AppBundle/{Entity, Repository}'
 
     # repositories
