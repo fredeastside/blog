@@ -95,8 +95,8 @@ doctrine:
 swiftmailer:
     transport:  "%env(MAILER_TRANSPORT)%"
     host:       "%env(MAILER_HOST)%"
-    port:       "%env(MAILER_PORT)%"
-    encryption: "%env(MAILER_ENCRYPTION)%"
+    port:       "465"
+    encryption: "ssl"
     username:   "%env(MAILER_USER)%"
     password:   "%env(MAILER_PASSWORD)%"
     spool:      { type: memory }
