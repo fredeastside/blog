@@ -1,1 +1,1 @@
-{{ activationCode }}
+<p>Для подтверждения регистрации пройдите по ссылке: <a href="{{ app.request.getSchemeAndHttpHost }} {{ path('registration_activation', { activationCode: activationCode }) }}">{{ app.request.getSchemeAndHttpHost }} {{ path('registration_activation', { activationCode: activationCode }) }}</a>

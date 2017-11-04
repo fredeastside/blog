@@ -26,8 +26,8 @@ class SendActivationCodeSubscriber implements EventSubscriberInterface
 
     public function onSendActivationCode(SendActivationCode $sendActivationCode)
     {
-        $message = (new \Swift_Message('Hello Email'))
-            ->setFrom('send@example.com')
+        $message = (new \Swift_Message('Подтверждение регистрации'))
+            ->setFrom('robot@fredrsf.ru')
             ->setTo($sendActivationCode->email())
             ->setBody(
                 $this->templating->render(
