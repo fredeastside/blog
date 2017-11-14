@@ -15,10 +15,12 @@ class Fixtures extends Fixture
         $dto->email = 'test@test.test';
         $dto->plainPassword = '123456';
         $user = User::createFromRegistration($dto);
+        $user->activate();
         $dto = new UserRegistration();
         $dto->email = 'admin@admin.admin';
         $dto->plainPassword = '123456';
         $admin = User::createFromRegistration($dto);
+        $admin->activate();
         $admin->toAdmin();
         $manager->persist($user);
         $manager->persist($admin);

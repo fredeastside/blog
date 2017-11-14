@@ -26,7 +26,7 @@ class UserActivation
     {
         $this->disableDoctrineActiveFilter();
         $user = $this->getUser($activation->activationCode());
-        $user->activation();
+        $user->activate();
         $this->em->flush();
     }
 

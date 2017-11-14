@@ -1,4 +1,5 @@
 parameters:
+    upload_dir: '%kernel.root_dir%/../web/upload'
 
 services:
 
@@ -45,3 +46,6 @@ services:
 #    AppBundle\Common\EventListener\RequestListener:
 #        tags:
 #            - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
+
+    AppBundle\Common\Service\Implementation\FileUpload:
+        arguments: ['%upload_dir%']

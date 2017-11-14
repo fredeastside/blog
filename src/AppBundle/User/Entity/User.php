@@ -145,9 +145,9 @@ class User implements UserInterface, Timestampable, Activated, DomainEventsPubli
         $this->addRole(Role::ROLE_ADMIN);
     }
 
-    public function activation()
+    public function activate()
     {
-        $this->activate();
+        $this->active = true;
         $this->activationCode = null;
     }
 
