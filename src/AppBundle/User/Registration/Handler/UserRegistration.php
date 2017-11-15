@@ -6,8 +6,9 @@ use AppBundle\User\Entity\User;
 use AppBundle\User\Registration\AuthenticatorHandler;
 use AppBundle\User\Registration\Command\UserRegistration as Command;
 use AppBundle\User\Repository\Users;
+use SimpleBus\Message\Bus\MessageBus;
 
-class UserRegistration
+class UserRegistration implements MessageBus
 {
     private $users;
     private $authenticatorHandler;
@@ -18,7 +19,7 @@ class UserRegistration
         $this->authenticatorHandler = $authenticatorHandler;
     }
 
-    public function handle(Command $registration)
+    public function handle($registration)
     {
         $user = User::createFromRegistration($registration);
         $this->users->save($user);

@@ -2,22 +2,13 @@
 
 namespace AppBundle\User\Repository\Implementation;
 
+use AppBundle\Common\Repository\Implementation\Repository;
 use AppBundle\User\Entity\User;
 use AppBundle\User\Repository\Users as UsersInterface;
-use Doctrine\Common\Persistence\ManagerRegistry;
 use Symfony\Component\Security\Core\User\UserInterface;
 
-class Users implements UsersInterface
+class Users extends Repository implements UsersInterface
 {
-    private $em;
-    private $repository;
-
-    public function __construct(ManagerRegistry $managerRegistry)
-    {
-        $this->em = $managerRegistry->getManagerForClass($this->getEntityClass());
-        $this->repository = $managerRegistry->getRepository($this->getEntityClass());
-    }
-
     public function findById($id)
     {
         return $this->repository->findOneBy(['id' => $id]);
@@ -42,10 +33,5 @@ class Users implements UsersInterface
     public function findByActivationCode($activationCode)
     {
         return $this->repository->findOneBy(['activationCode' => $activationCode]);
-    }
-
-    public function getManager()
-    {
-        return $this->em;
     }
 }

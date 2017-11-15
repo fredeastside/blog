@@ -36,9 +36,10 @@ class Tag implements Sluggable
      */
     private $posts;
 
-    public function __construct()
+    public function __construct(string $name)
     {
         $this->posts = new ArrayCollection();
+        $this->name = $name;
     }
 
     public function id()

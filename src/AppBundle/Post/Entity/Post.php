@@ -7,6 +7,7 @@ use AppBundle\Common\Entity\Implementation\Sluggable as SluggableTrait;
 use AppBundle\Common\Entity\Timestampable;
 use AppBundle\Common\Entity\Implementation\Timestampable as TimestampableTrait;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\{
     Entity,
     Table,
@@ -48,6 +49,11 @@ class Post implements Timestampable, Sluggable
      */
     private $tags;
 
+    /**
+     * @Column(type="text")
+     */
+    private $content;
+
     public function __construct()
     {
         $this->tags = new ArrayCollection();
@@ -71,5 +77,10 @@ class Post implements Timestampable, Sluggable
     public function tags()
     {
         return $this->tags;
+    }
+
+    public function content()
+    {
+        return $this->content;
     }
 }

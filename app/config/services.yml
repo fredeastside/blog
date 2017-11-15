@@ -13,12 +13,11 @@ services:
         exclude: '../../src/AppBundle/{DataFixtures}'
 #        exclude: '../../src/AppBundle/{Entity, Repository}'
 
-    # repositories
-    AppBundle\Domain\Repository\UserRepository:
-        factory: ['@doctrine.orm.entity_manager', getRepository]
-        arguments:
-            - 'AppBundle:User'
-            - '@templating'
+    AppBundle\Common\Repository\Implementation\Repository:
+        abstract: true
+
+    AppBundle\User\Repository\Implementation\Users:
+        parent: AppBundle\Common\Repository\Implementation\Repository
 
     # listeners
     AppBundle\Common\Doctrine\EventListener\HashPasswordSubscriber:
@@ -34,6 +33,11 @@ services:
         public: true
         tags:
             - { name: command_handler, handles: AppBundle\User\Registration\Command\UserActivation }
+
+    AppBundle\Category\Add\Handler\AddCategory:
+        public: true
+        tags:
+            - { name: command_handler, handles: AppBundle\Category\Add\Command\AddCategory }
 
     AppBundle\Common\Doctrine\EventListener\DomainEventsSubscriber:
         tags:

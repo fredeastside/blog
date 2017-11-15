@@ -2,10 +2,9 @@
 
 namespace AppBundle\User\Repository;
 
-use AppBundle\Common\Repository\Repository;
 use Symfony\Component\Security\Core\User\UserInterface;
 
-interface Users extends Repository
+interface Users
 {
     public function findById($id);
 

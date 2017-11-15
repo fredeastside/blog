@@ -3,10 +3,9 @@
 namespace AppBundle\Controller\Admin;
 
 use AppBundle\Category\Add\Form\AddCategoryType;
-use AppBundle\Category\Entity\Category;
-use AppBundle\Common\Service\FileUpload;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use SimpleBus\Message\Bus\MessageBus;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -16,11 +15,11 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class CategoryController extends Controller
 {
-    private $fileUpload;
+    private $messageBus;
 
-    public function __construct(FileUpload $fileUpload)
+    public function __construct(MessageBus $messageBus)
     {
-        $this->fileUpload = $fileUpload;
+        $this->messageBus = $messageBus;
     }
 
     /**
@@ -31,12 +30,7 @@ class CategoryController extends Controller
         $form = $this->createForm(AddCategoryType::class);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $addCategory = $form->getData();
-            $this->fileUpload->upload($addCategory->picture);
-            $category = new Category($addCategory->name, $this->fileUpload->fileName());
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($category);
-            $em->flush();
+            $this->messageBus->handle($form->getData());
             $this->addFlash('success', 'Категория добавлена.');
         }
 

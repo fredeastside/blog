@@ -6,9 +6,10 @@ use AppBundle\User\Entity\User;
 use AppBundle\User\Registration\Command\UserActivation as Command;
 use AppBundle\User\Repository\Users;
 use Doctrine\ORM\EntityManager;
+use SimpleBus\Message\Bus\MessageBus;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-class UserActivation
+class UserActivation implements MessageBus
 {
     private $users;
     /**
@@ -22,7 +23,7 @@ class UserActivation
         $this->em = $this->users->getManager();
     }
 
-    public function handle(Command $activation)
+    public function handle($activation)
     {
         $this->disableDoctrineActiveFilter();
         $user = $this->getUser($activation->activationCode());
