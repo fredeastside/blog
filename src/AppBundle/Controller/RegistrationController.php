@@ -2,12 +2,10 @@
 
 namespace AppBundle\Controller;
 
-use AppBundle\User\Entity\User;
 use AppBundle\User\Registration\AuthenticatorHandler;
 use AppBundle\User\Registration\Command\UserActivation;
 use AppBundle\User\Registration\Form\RegistrationType;
 use AppBundle\User\Repository\Users;
-use Doctrine\ORM\EntityManager;
 use SimpleBus\Message\Bus\MessageBus;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;

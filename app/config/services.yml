@@ -13,11 +13,11 @@ services:
         exclude: '../../src/AppBundle/{DataFixtures}'
 #        exclude: '../../src/AppBundle/{Entity, Repository}'
 
-    AppBundle\Common\Repository\Implementation\Repository:
-        abstract: true
-
-    AppBundle\User\Repository\Implementation\Users:
-        parent: AppBundle\Common\Repository\Implementation\Repository
+#    AppBundle\Common\Repository\Implementation\Repository:
+#        abstract: true
+#
+#    AppBundle\User\Repository\Implementation\Users:
+#        parent: AppBundle\Common\Repository\Implementation\Repository
 
     # listeners
     AppBundle\Common\Doctrine\EventListener\HashPasswordSubscriber:
