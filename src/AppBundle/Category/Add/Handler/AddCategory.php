@@ -5,10 +5,10 @@ namespace AppBundle\Category\Add\Handler;
 use AppBundle\Category\Add\Command\AddCategory as Command;
 use AppBundle\Category\Entity\Category;
 use AppBundle\Category\Repository\Categories;
+use AppBundle\Common\Handler\Handler;
 use AppBundle\Common\Service\FileUpload;
-use SimpleBus\Message\Bus\MessageBus;
 
-class AddCategory implements MessageBus
+class AddCategory implements Handler
 {
     private $categories;
     private $fileUpload;

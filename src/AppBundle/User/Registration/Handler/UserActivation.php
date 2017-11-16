@@ -2,27 +2,27 @@
 
 namespace AppBundle\User\Registration\Handler;
 
+use AppBundle\Common\Handler\Handler;
 use AppBundle\User\Entity\User;
 use AppBundle\User\Registration\Command\UserActivation as Command;
 use AppBundle\User\Repository\Users;
 use Doctrine\ORM\EntityManager;
-use SimpleBus\Message\Bus\MessageBus;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-class UserActivation implements MessageBus
+class UserActivation implements Handler
 {
     private $users;
-    /**
-     * @var EntityManager $em
-     */
     private $em;
 
-    public function __construct(Users $users)
+    public function __construct(Users $users, EntityManager $em)
     {
         $this->users = $users;
-        $this->em = $this->users->getManager();
+        $this->em = $em;
     }
 
+    /**
+     * @param Command $activation
+     */
     public function handle($activation)
     {
         $this->disableDoctrineActiveFilter();

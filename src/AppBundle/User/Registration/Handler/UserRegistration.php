@@ -2,13 +2,13 @@
 
 namespace AppBundle\User\Registration\Handler;
 
+use AppBundle\Common\Handler\Handler;
 use AppBundle\User\Entity\User;
 use AppBundle\User\Registration\AuthenticatorHandler;
 use AppBundle\User\Registration\Command\UserRegistration as Command;
 use AppBundle\User\Repository\Users;
-use SimpleBus\Message\Bus\MessageBus;
 
-class UserRegistration implements MessageBus
+class UserRegistration implements Handler
 {
     private $users;
     private $authenticatorHandler;
@@ -19,6 +19,9 @@ class UserRegistration implements MessageBus
         $this->authenticatorHandler = $authenticatorHandler;
     }
 
+    /**
+     * @param Command $registration
+     */
     public function handle($registration)
     {
         $user = User::createFromRegistration($registration);
