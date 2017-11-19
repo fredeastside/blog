@@ -3,18 +3,25 @@
 namespace AppBundle\Controller\Admin;
 
 use AppBundle\Tag\Add\Form\AddTagType;
-use AppBundle\Tag\Entity\Tag;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use SimpleBus\Message\Bus\MessageBus;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @Security("is_granted('ROLE_ADMIN')")
  * @Route("/admin/tag")
  */
-class TagController extends Controller
+class TagController extends AbstractController
 {
+    private $messageBus;
+
+    public function __construct(MessageBus $messageBus)
+    {
+        $this->messageBus = $messageBus;
+    }
+
     /**
      * @Route("/add", name="admin_tag_add", methods={"GET", "POST"})
      */
@@ -23,11 +30,7 @@ class TagController extends Controller
         $form = $this->createForm(AddTagType::class);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $addTag = $form->getData();
-            $tag = new Tag($addTag->name);
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($tag);
-            $em->flush();
+            $this->messageBus->handle($form->getData());
             $this->addFlash('success', 'Тег добавлен.');
         }
 

@@ -4,11 +4,11 @@ namespace AppBundle\Controller;
 
 use AppBundle\User\Login\Form\LoginType;
 use AppBundle\User\Login\Command\UserLogin;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
-class LoginController extends Controller
+class LoginController extends AbstractController
 {
     private $authenticationUtils;
 

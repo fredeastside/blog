@@ -18,7 +18,7 @@
                     </div>
                     <div class="secondary-info">
                         <p>
-                            <a class="btn btn-primary" href="/demo/writer/jekyll/v1-3/about/"><i class="fa fa-user-plus"></i>Подписка на публикации</a>
+                            <a class="btn btn-primary" href="{{ path('subscription') }}"><i class="fa fa-user-plus"></i>Подписка на публикации</a>
                         </p>
                     </div>
 
@@ -32,9 +32,9 @@
                 {% endfor %}
                 {% block content %}{% endblock %}
                 <footer class="split-footer">
-                    <a href="/demo/writer/jekyll/v1-3/about">About</a>
+                    <a href="{{ path('homepage_about') }}">Об авторе</a>
                     <i class="link-spacer"></i>
-                    <a href="/demo/writer/jekyll/v1-3/about">Writer 2016</a>
+                    <a href="{{ path('homepage_index') }}">copyright &copy; {{ "now"|date("Y") }}</a>
                 </footer>
             </div><!-- main content -->
         </div><!--/row -->

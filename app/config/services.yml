@@ -43,6 +43,11 @@ services:
         tags:
             - { name: command_handler, handles: AppBundle\Category\Add\Command\AddCategory }
 
+    AppBundle\Tag\Add\Handler\AddTag:
+        public: true
+        tags:
+            - { name: command_handler, handles: AppBundle\Tag\Add\Command\AddTag }
+
     AppBundle\Common\Doctrine\EventListener\DomainEventsSubscriber:
         tags:
             - { name: doctrine.event_subscriber }

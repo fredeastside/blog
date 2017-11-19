@@ -6,14 +6,14 @@ use AppBundle\Category\Add\Form\AddCategoryType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use SimpleBus\Message\Bus\MessageBus;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @Security("is_granted('ROLE_ADMIN')")
  * @Route("/admin/category")
  */
-class CategoryController extends Controller
+class CategoryController extends AbstractController
 {
     private $messageBus;
 

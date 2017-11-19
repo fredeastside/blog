@@ -7,14 +7,14 @@ use AppBundle\User\Registration\Command\UserActivation;
 use AppBundle\User\Registration\Form\RegistrationType;
 use AppBundle\User\Repository\Users;
 use SimpleBus\Message\Bus\MessageBus;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @Route("/registration")
  */
-class RegistrationController extends Controller
+class RegistrationController extends AbstractController
 {
     private $messageBus;
     private $authenticatorHandler;
