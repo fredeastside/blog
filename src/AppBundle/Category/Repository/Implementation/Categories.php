@@ -18,4 +18,9 @@ class Categories extends Repository implements CategoriesInterface
     {
         return Category::class;
     }
+
+    public function findAll()
+    {
+        return $this->repository->findAll();
+    }
 }

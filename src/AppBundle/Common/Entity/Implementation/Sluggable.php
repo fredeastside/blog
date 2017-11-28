@@ -25,6 +25,6 @@ trait Sluggable
 
     public function name()
     {
-        return $this->slug;
+        return $this->name;
     }
 }
