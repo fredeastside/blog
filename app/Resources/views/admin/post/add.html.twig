@@ -13,6 +13,8 @@
 
 {% block javascripts %}
     {{ parent() }}
+    <script src='{{ asset('js/vendor/markdown.js') }}'></script>
+    <script src='{{ asset('js/vendor/to-markdown.js') }}'></script>
     <script src='{{ asset('js/vendor/bootstrap-markdown.js') }}'></script>
     <script src='{{ asset('js/vendor/bootstrap-markdown.ru.js') }}'></script>
     <script>

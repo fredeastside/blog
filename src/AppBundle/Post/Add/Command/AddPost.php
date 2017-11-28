@@ -25,6 +25,4 @@ class AddPost
      * @NotBlank()
      */
     public $tags;
-
-    public $user;
 }

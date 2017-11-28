@@ -91,20 +91,21 @@ class Post implements Timestampable, Sluggable
     public static function create(AddPost $addPost)
     {
         $post = new self();
-        $post->addUser($addPost->user);
+        $post->name = $addPost->name;
+        $post->content = $addPost->content;
         $post->addTags($addPost->tags);
         $post->addCategory($addPost->category);
 
         return $post;
     }
 
-    private function addUser(User $user)
+    public function addUser(User $user)
     {
         $this->user = $user;
         $this->user->addPost($this);
     }
 
-    private function addTags(Tag ...$tags)
+    private function addTags(iterable $tags)
     {
         foreach ($tags as $tag) {
             $this->addTag($tag);
