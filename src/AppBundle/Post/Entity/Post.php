@@ -2,10 +2,14 @@
 
 namespace AppBundle\Post\Entity;
 
+use AppBundle\Category\Entity\Category;
 use AppBundle\Common\Entity\Sluggable;
 use AppBundle\Common\Entity\Implementation\Sluggable as SluggableTrait;
 use AppBundle\Common\Entity\Timestampable;
 use AppBundle\Common\Entity\Implementation\Timestampable as TimestampableTrait;
+use AppBundle\Post\Add\Command\AddPost;
+use AppBundle\Tag\Entity\Tag;
+use AppBundle\User\Entity\User;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\{
@@ -54,7 +58,7 @@ class Post implements Timestampable, Sluggable
      */
     private $content;
 
-    public function __construct()
+    private function __construct()
     {
         $this->tags = new ArrayCollection();
     }
@@ -82,5 +86,44 @@ class Post implements Timestampable, Sluggable
     public function content()
     {
         return $this->content;
+    }
+
+    public static function create(AddPost $addPost)
+    {
+        $post = new self();
+        $post->addUser($addPost->user);
+        $post->addTags($addPost->tags);
+        $post->addCategory($addPost->category);
+
+        return $post;
+    }
+
+    private function addUser(User $user)
+    {
+        $this->user = $user;
+        $this->user->addPost($this);
+    }
+
+    private function addTags(Tag ...$tags)
+    {
+        foreach ($tags as $tag) {
+            $this->addTag($tag);
+        }
+    }
+
+    private function addTag(Tag $tag)
+    {
+        if ($this->tags->contains($tag)) {
+            return;
+        }
+
+        $tag->addPost($this);
+        $this->tags->add($tag);
+    }
+
+    private function addCategory(Category $category)
+    {
+        $this->category = $category;
+        $category->addPost($this);
     }
 }

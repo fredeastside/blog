@@ -4,6 +4,7 @@ namespace AppBundle\Tag\Entity;
 
 use AppBundle\Common\Entity\Sluggable;
 use AppBundle\Common\Entity\Implementation\Sluggable as SluggableTrait;
+use AppBundle\Post\Entity\Post;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping\{
     Entity,
@@ -50,5 +51,14 @@ class Tag implements Sluggable
     public function posts()
     {
         return $this->posts;
+    }
+
+    public function addPost(Post $post)
+    {
+        if ($this->posts->contains($post)) {
+            return;
+        }
+
+        $this->posts->add($post);
     }
 }

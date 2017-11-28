@@ -6,6 +6,7 @@ use AppBundle\Common\Entity\Sluggable;
 use AppBundle\Common\Entity\Implementation\Sluggable as SluggableTrait;
 use AppBundle\Common\Entity\Timestampable;
 use AppBundle\Common\Entity\Implementation\Timestampable as TimestampableTrait;
+use AppBundle\Post\Entity\Post;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping\{
     Entity,
@@ -57,5 +58,14 @@ class Category implements Timestampable, Sluggable
     public function picture()
     {
         return $this->picture;
+    }
+
+    public function addPost(Post $post)
+    {
+        if ($this->posts->contains($post)) {
+            return;
+        }
+
+        $this->posts->add($post);
     }
 }

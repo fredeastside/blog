@@ -1,7 +1,26 @@
 {% extends '::two_column_layout.html.twig' %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/bootstrap-markdown.min.css') }}">
+{% endblock %}
+
 {% block content %}
     {{ form_start(form) }}
     {{ form_widget(form) }}
     {{ form_end(form) }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src='{{ asset('js/vendor/bootstrap-markdown.js') }}'></script>
+    <script src='{{ asset('js/vendor/bootstrap-markdown.ru.js') }}'></script>
+    <script>
+        $(function () {
+            $("textarea").markdown({
+                height: 480,
+                language: "ru"
+            });
+        });
+    </script>
 {% endblock %}

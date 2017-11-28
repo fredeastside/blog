@@ -2,6 +2,11 @@
     <li><i class="fa fa-home"></i><a href="{{ path('homepage_index') }}">Главная</a></li>
     <li><i class="fa fa-anchor"></i><a href="{{ path('login') }}">Вход/Регистрация</a></li>
     <li><i class="fa fa-user"></i><a href="{{ path('homepage_about') }}">Об авторе</a></li>
+    {% if is_granted('ROLE_ADMIN') %}
+        <li><i class="fa fa-folder"></i><a href="{{ path('admin_category_add') }}">Добавить категорию</a></li>
+        <li><i class="fa fa-cube"></i><a href="{{ path('admin_tag_add') }}">Добавить тег</a></li>
+        <li><i class="fa fa-bookmark"></i><a href="{{ path('admin_post_add') }}">Добавить пост</a></li>
+    {% endif %}
     {#<li><i class="fa fa-anchor"></i><a href="/demo/writer/jekyll/v1-3/about">About</a></li>
     <li><i class="fa fa-plane"></i><a href="/demo/writer/jekyll/v1-3/contact">Contact</a></li>
     #}

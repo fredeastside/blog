@@ -8,6 +8,7 @@ use AppBundle\Common\Entity\Implementation\Timestampable as TimestampableTrait;
 use AppBundle\Common\Entity\Implementation\Activated as ActivatedTrait;
 use AppBundle\Common\Event\DomainEvents;
 use AppBundle\Common\Event\DomainEventsPublisher;
+use AppBundle\Post\Entity\Post;
 use AppBundle\User\Event\SendActivationCode;
 use AppBundle\User\Registration\Command\UserRegistration;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -168,6 +169,15 @@ class User implements UserInterface, Timestampable, Activated, DomainEventsPubli
         }
 
         return $this;
+    }
+
+    public function addPost(Post $post)
+    {
+        if ($this->posts->contains($post)) {
+            return;
+        }
+
+        $this->posts->add($post);
     }
 
     private function removeRole(string $role)
