@@ -18,4 +18,9 @@ class Posts extends Repository implements PostsInterface
     {
         return Post::class;
     }
+
+    public function findAll()
+    {
+        return $this->repository->findAll();
+    }
 }

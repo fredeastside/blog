@@ -11,7 +11,6 @@ use AppBundle\Post\Add\Command\AddPost;
 use AppBundle\Tag\Entity\Tag;
 use AppBundle\User\Entity\User;
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\{
     Entity,
     Table,
@@ -45,6 +44,7 @@ class Post implements Timestampable, Sluggable
 
     /**
      * @ManyToOne(targetEntity="AppBundle\Category\Entity\Category", inversedBy="posts")
+     * @var Category $category
      */
     private $category;
 
@@ -126,5 +126,10 @@ class Post implements Timestampable, Sluggable
     {
         $this->category = $category;
         $category->addPost($this);
+    }
+
+    public function getCategoryName()
+    {
+        return $this->category->name();
     }
 }

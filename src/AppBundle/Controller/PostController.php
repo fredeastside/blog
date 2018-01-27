@@ -5,10 +5,13 @@ namespace AppBundle\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
+/**
+ * @Route("/post")
+ */
 class PostController extends AbstractController
 {
     /**
-     * @Route("/post/{slug}", name="post_detail")
+     * @Route("/{slug}", name="post_detail")
      */
     public function detailAction()
     {

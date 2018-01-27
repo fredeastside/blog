@@ -3,14 +3,14 @@
 {% block content %}
     <div class="author-bio">
 
-        <img src="/demo/writer/jekyll/v1-3/img/michelle.jpg">
+        <img src="{{ asset('img/author.jpg') }}">
 
         <div class="author-bio__info">
-            <h1 id="michelle-jones">Michelle Jones</h1>
+            <h1>Сергей Казнаховский</h1>
 
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Perferendis necessitatibus repellat et similique, assumenda dolor possimus sunt repellendus ratione quas nihil expedita maiores, ex id odio molestiae ipsam officiis magni!</p>
+            <p>Приветствую! Меня зовут Сергей, я являюсь веб-разработчиком около пяти лет. В данный момент работаю в крупной e-commerce компании и разрабатываю высоконагруженный API. Люблю программирование, играю в футбол, путешествую и провожу время с семьей.</p>
 
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Perferendis necessitatibus repellat et similique, assumenda dolor possimus sunt repellendus ratione quas nihil expedita maiores, ex id odio molestiae ipsam officiis magni!</p>
+            <p>В данном блоге я буду публиковать посты о разработке и информатике в целом. Буду очень признателен рекомендациям и замечаниям. Подписаться на новые публикации можно <a href="{{ path('subscription') }}">здесь</a>. Связаться со мной можно здесь.</p>
 
         </div>
     </div>

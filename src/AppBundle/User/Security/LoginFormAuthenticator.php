@@ -13,8 +13,9 @@ use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\Security\Guard\Authenticator\AbstractFormLoginAuthenticator;
+use Symfony\Component\Security\Guard\AuthenticatorInterface;
 
-class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
+class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements AuthenticatorInterface
 {
     private $router;
     private $formFactory;
@@ -89,5 +90,19 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
         $data = $form->getData();
 
         return $data;
+    }
+
+    /**
+     * Does the authenticator support the given Request?
+     *
+     * If this returns false, the authenticator will be skipped.
+     *
+     * @param Request $request
+     *
+     * @return bool
+     */
+    public function supports(Request $request)
+    {
+        // TODO: Implement supports() method.
     }
 }

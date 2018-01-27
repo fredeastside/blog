@@ -10,8 +10,8 @@ services:
 
     AppBundle\:
         resource: '../../src/AppBundle/*'
-        exclude: '../../src/AppBundle/{DataFixtures}'
-#        exclude: '../../src/AppBundle/{Entity, Repository}'
+        #exclude: '../../src/AppBundle/{DataFixtures, Category}'
+        exclude: '../../src/AppBundle/{Category/Entity,DataFixtures}'
 
     AppBundle\Controller\:
         resource: '../../src/AppBundle/Controller'
