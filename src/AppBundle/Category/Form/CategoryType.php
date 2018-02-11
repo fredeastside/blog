@@ -1,15 +1,14 @@
 <?php
 
-namespace AppBundle\Category\Add\Form;
+namespace AppBundle\Category\Form;
 
-use AppBundle\Category\Add\Command\AddCategory;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class AddCategoryType extends AbstractType
+class CategoryType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -28,7 +27,7 @@ class AddCategoryType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => AddCategory::class,
+            'data_class' => CategoryDTO::class,
         ]);
     }
 }

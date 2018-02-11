@@ -2,16 +2,14 @@
 
 namespace AppBundle\Controller\Admin;
 
-use AppBundle\Category\Add\Command\AddCategory;
-use AppBundle\Category\Add\Form\AddCategoryType;
+use AppBundle\Category\Form\CategoryDTO;
+use AppBundle\Category\Form\CategoryType;
 use AppBundle\Category\Entity\Category;
-use AppBundle\Category\Repository\Categories;
+use AppBundle\Category\Service\CategoryService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use SimpleBus\Message\Bus\MessageBus;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\FormInterface;
-use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -20,23 +18,20 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class CategoryController extends Controller
 {
-    private $messageBus;
+    private $categoryService;
 
-    public function __construct(MessageBus $messageBus)
+    public function __construct(CategoryService $categoryService)
     {
-        $this->messageBus = $messageBus;
+        $this->categoryService = $categoryService;
     }
 
     /**
      * @Route("/", name="admin_category_list", methods={"GET"})
-     * @param Categories $categories
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function listAction(Categories $categories)
+    public function listAction()
     {
         return $this->render(':admin/category:list.html.twig', [
-            'categories' => $categories->findAll()
+            'categories' => $this->categoryService->getAll()
         ]);
     }
 
@@ -46,13 +41,14 @@ class CategoryController extends Controller
     public function addAction(Request $request)
     {
         $form = $this->handleForm($request);
-        if ($this->submitForm($form, 'Категория создана.')) {
-            return $this->redirectToRoute('admin_category_list');
+        $callback = function(CategoryDTO $data) {
+            $this->categoryService->add($data);
+        };
+        if ($this->submitForm($form, $callback, 'Категория создана.')) {
+            return $this->redirectToList();
         }
 
-        return $this->render(':admin/category:add.html.twig', [
-            'form' => $form->createView(),
-        ]);
+        return $this->responseWithForm($form, ':admin/category:add.html.twig');
     }
 
     /**
@@ -60,42 +56,56 @@ class CategoryController extends Controller
      */
     public function editAction(Category $category, Request $request)
     {
-        $category = $this->getCategoryCommand($category);
-        $form = $this->handleForm($request, $category);
-        if ($this->submitForm($form, 'Категория обновлена.')) {
-            return $this->redirectToRoute('admin_category_list');
+        $form = $this->handleForm($request, $this->categoryService->getDTOByCategory($category));
+        $callback = function(CategoryDTO $data) use($category) {
+            $this->categoryService->update($category, $data);
+        };
+        if ($this->submitForm($form, $callback, 'Категория обновлена.')) {
+            return $this->redirectToList();
         }
 
-        return $this->render(':admin/category:edit.html.twig', [
-            'form' => $form->createView(),
-        ]);
+        return $this->responseWithForm($form, ':admin/category:edit.html.twig');
     }
 
-    private function getCategoryCommand(Category $category): AddCategory
+    /**
+     * @Route("/delete/{category}", name="admin_category_delete", methods={"GET"})
+     */
+    public function deleteAction(Category $category)
     {
-        $category = AddCategory::fromCategory($category);
-        $category->picture = new File($this->getParameter('upload_dir').'/'.$category->picture);
+        $this->categoryService->remove($category);
 
-        return $category;
+        return $this->redirectToList();
     }
 
-    private function handleForm(Request $request, ?AddCategory $category = null): FormInterface
-    {
-        $form = $this->createForm(AddCategoryType::class, $category);
-        $form->handleRequest($request);
-
-        return $form;
-    }
-
-    private function submitForm(FormInterface $form, string $flashMessage): bool
+    private function submitForm(FormInterface $form, callable $callback, string $message): bool
     {
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->messageBus->handle($form->getData());
-            $this->addFlash('success', $flashMessage);
+            $callback($form->getData());
+            $this->addFlash('success', $message);
 
             return true;
         }
 
         return false;
+    }
+
+    private function handleForm(Request $request, ?CategoryDTO $category=null): FormInterface
+    {
+        $form = $this->createForm(CategoryType::class, $category);
+        $form->handleRequest($request);
+
+        return $form;
+    }
+
+    private function responseWithForm(FormInterface $form, string $template)
+    {
+        return $this->render($template, [
+            'form' => $form->createView(),
+        ]);
+    }
+
+    private function redirectToList()
+    {
+        return $this->redirectToRoute('admin_category_list');
     }
 }

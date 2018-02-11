@@ -17,3 +17,7 @@ swiftmailer:
     spool:
         type: file
         path: "%kernel.root_dir%/../var/spool/default"
+
+security:
+    encoders:
+        AppBundle\User\Entity\User: plaintext

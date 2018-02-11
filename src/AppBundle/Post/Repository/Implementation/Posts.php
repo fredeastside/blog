@@ -23,4 +23,10 @@ class Posts extends Repository implements PostsInterface
     {
         return $this->repository->findAll();
     }
+
+    public function remove(Post $post)
+    {
+        $this->em->remove($post);
+        $this->em->flush();
+    }
 }

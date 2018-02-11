@@ -1,10 +1,12 @@
 <?php
 
-namespace AppBundle\Post\Add\Command;
+declare(strict_types=1);
+
+namespace AppBundle\Post\Form;
 
 use Symfony\Component\Validator\Constraints\NotBlank;
 
-class AddPost
+class PostDTO
 {
     /**
      * @NotBlank()

@@ -11,7 +11,7 @@ services:
     AppBundle\:
         resource: '../../src/AppBundle/*'
         #exclude: '../../src/AppBundle/{DataFixtures, Category}'
-        exclude: '../../src/AppBundle/{Category/Entity,DataFixtures}'
+        exclude: '../../src/AppBundle/{Category/Entity,Tag/Entity,DataFixtures}'
 
     AppBundle\Controller\:
         resource: '../../src/AppBundle/Controller'
@@ -37,21 +37,6 @@ services:
         public: true
         tags:
             - { name: command_handler, handles: AppBundle\User\Registration\Command\UserActivation }
-
-    AppBundle\Category\Add\Handler\AddCategory:
-        public: true
-        tags:
-            - { name: command_handler, handles: AppBundle\Category\Add\Command\AddCategory }
-
-    AppBundle\Tag\Add\Handler\AddTag:
-        public: true
-        tags:
-            - { name: command_handler, handles: AppBundle\Tag\Add\Command\AddTag }
-
-    AppBundle\Post\Add\Handler\AddPost:
-        public: true
-        tags:
-            - { name: command_handler, handles: AppBundle\Post\Add\Command\AddPost }
 
     AppBundle\Common\Doctrine\EventListener\DomainEventsSubscriber:
         tags:

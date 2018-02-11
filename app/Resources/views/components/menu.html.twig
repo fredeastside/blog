@@ -3,8 +3,8 @@
     <li><i class="fa fa-user"></i><a href="{{ path('homepage_about') }}">Об авторе</a></li>
     {% if is_granted('ROLE_ADMIN') %}
         <li><i class="fa fa-folder"></i><a href="{{ path('admin_category_list') }}">Категории</a></li>
-        <li><i class="fa fa-cube"></i><a href="{{ path('admin_tag_add') }}">Добавить тег</a></li>
-        <li><i class="fa fa-bookmark"></i><a href="{{ path('admin_post_add') }}">Добавить пост</a></li>
+        <li><i class="fa fa-cube"></i><a href="{{ path('admin_tag_list') }}">Теги</a></li>
+        <li><i class="fa fa-bookmark"></i><a href="{{ path('admin_post_list') }}">Посты</a></li>
     {% endif %}
     {% if is_granted('IS_AUTHENTICATED_FULLY') %}
         <li><i class="fa fa-anchor"></i><a href="{{ path('logout') }}">Выход</a></li>

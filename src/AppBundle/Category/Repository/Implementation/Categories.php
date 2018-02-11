@@ -23,4 +23,10 @@ class Categories extends Repository implements CategoriesInterface
     {
         return $this->repository->findAll();
     }
+
+    public function remove(Category $category)
+    {
+        $this->em->remove($category);
+        $this->em->flush();
+    }
 }

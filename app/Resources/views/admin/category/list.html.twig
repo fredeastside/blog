@@ -1,25 +1,25 @@
-{% extends '::two_column_layout.html.twig' %}
+{% extends ':admin:table.html.twig' %}
 
-{% block content %}
-    <div class="table-responsive" style="font-size: 14px;">
-        <table class="table table-bordred table-striped">
-            <thead>
-                <th>Название</th>
-                <th>URL</th>
-                <th>Редактировать</th>
-                <th>Удалить</th>
-            </thead>
-            <tbody>
-            {% for category in categories %}
-                <tr>
-                    <td>{{ category.name }}</td>
-                    <td>{{ category.slug }}</td>
-                    <td><p title="Edit"><a href="{{ path('admin_category_edit', { category: category.id }) }}" class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-pencil"></span></a></p></td>
-                    <td><p title="Delete"><button class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash"></span></button></p></td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
-    </div>
-    <div><a href="{{ path('admin_category_add') }}" class="btn-default btn">Добавить</a></div>
+{% import 'components/macros/admin.html.twig' as adminMacros %}
+
+{% block thead %}
+    <th>Название</th>
+    <th>URL</th>
+    <th>Редактировать</th>
+    <th>Удалить</th>
+{% endblock %}
+
+{% block tbody %}
+    {% for category in categories %}
+        <tr>
+            <td>{{ category.name }}</td>
+            <td>{{ category.slug }}</td>
+            <td>{{ adminMacros.editButton(path('admin_category_edit', { category: category.id })) }}</td>
+            <td>{{ adminMacros.deleteButton(path('admin_category_delete', { category: category.id })) }}</td>
+        </tr>
+    {% endfor %}
+{% endblock %}
+
+{% block footer %}
+    {{ adminMacros.addButton(path('admin_category_add')) }}
 {% endblock %}

@@ -7,7 +7,7 @@ use AppBundle\Common\Entity\Sluggable;
 use AppBundle\Common\Entity\Implementation\Sluggable as SluggableTrait;
 use AppBundle\Common\Entity\Timestampable;
 use AppBundle\Common\Entity\Implementation\Timestampable as TimestampableTrait;
-use AppBundle\Post\Add\Command\AddPost;
+use AppBundle\Post\Form\PostDTO;
 use AppBundle\Tag\Entity\Tag;
 use AppBundle\User\Entity\User;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -88,7 +88,7 @@ class Post implements Timestampable, Sluggable
         return $this->content;
     }
 
-    public static function create(AddPost $addPost)
+    public static function create(PostDTO $addPost)
     {
         $post = new self();
         $post->name = $addPost->name;

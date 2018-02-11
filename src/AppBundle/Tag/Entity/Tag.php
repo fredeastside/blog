@@ -40,7 +40,7 @@ class Tag implements Sluggable
     public function __construct(string $name)
     {
         $this->posts = new ArrayCollection();
-        $this->name = $name;
+        $this->update($name);
     }
 
     public function id()
@@ -60,5 +60,10 @@ class Tag implements Sluggable
         }
 
         $this->posts->add($post);
+    }
+
+    public function update($name)
+    {
+        $this->name = $name;
     }
 }

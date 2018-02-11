@@ -1,9 +1,8 @@
 <?php
 
-namespace AppBundle\Post\Add\Form;
+namespace AppBundle\Post\Form;
 
 use AppBundle\Category\Entity\Category;
-use AppBundle\Post\Add\Command\AddPost;
 use AppBundle\Tag\Entity\Tag;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -12,7 +11,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class AddPostType extends AbstractType
+class PostType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -21,11 +20,17 @@ class AddPostType extends AbstractType
             ->add('category', EntityType::class, [
                 'class' => Category::class,
                 'choice_label' => 'name',
+                'attr' => [
+                    'class' => 'js-select2',
+                ]
             ])
             ->add('tags', EntityType::class, [
                 'class' => Tag::class,
                 'choice_label' => 'name',
                 'multiple' => true,
+                'attr' => [
+                    'class' => 'js-select2-multiple',
+                ]
             ])
             ->add('content', TextareaType::class)
             ->add('save', SubmitType::class, [
@@ -40,7 +45,7 @@ class AddPostType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => AddPost::class
+            'data_class' => PostDTO::class
         ]);
     }
 }

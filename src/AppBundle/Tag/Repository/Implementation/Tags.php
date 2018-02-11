@@ -18,4 +18,15 @@ class Tags extends Repository implements TagsInterface
         $this->em->persist($tag);
         $this->em->flush();
     }
+
+    public function findAll()
+    {
+        return $this->repository->findAll();
+    }
+
+    public function remove(Tag $tag)
+    {
+        $this->em->remove($tag);
+        $this->em->flush();
+    }
 }

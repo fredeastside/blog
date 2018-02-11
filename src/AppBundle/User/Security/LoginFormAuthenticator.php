@@ -103,6 +103,6 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements A
      */
     public function supports(Request $request)
     {
-        // TODO: Implement supports() method.
+        return true;
     }
 }

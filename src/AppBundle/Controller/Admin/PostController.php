@@ -3,10 +3,14 @@
 namespace AppBundle\Controller\Admin;
 
 use AppBundle\Post\Add\Form\AddPostType;
+use AppBundle\Post\Entity\Post;
+use AppBundle\Post\Form\PostDTO;
+use AppBundle\Post\Form\PostType;
+use AppBundle\Post\Service\PostService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use SimpleBus\Message\Bus\MessageBus;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -15,11 +19,21 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class PostController extends AbstractController
 {
-    private $messageBus;
+    private $postService;
 
-    public function __construct(MessageBus $messageBus)
+    public function __construct(PostService $postService)
     {
-        $this->messageBus = $messageBus;
+        $this->postService = $postService;
+    }
+
+    /**
+     * @Route("/", name="admin_post_list", methods={"GET"})
+     */
+    public function listAction()
+    {
+        return $this->render(':admin/post:list.html.twig', [
+            'posts' => $this->postService->getAll()
+        ]);
     }
 
     /**
@@ -27,15 +41,72 @@ class PostController extends AbstractController
      */
     public function addAction(Request $request)
     {
-        $form = $this->createForm(AddPostType::class);
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->messageBus->handle($form->getData());
-            $this->addFlash('success', 'Пост добавлен.');
+        $form = $this->handleForm($request);
+        $callback = function(PostDTO $data) {
+            $this->postService->add($data);
+        };
+        if ($this->submitForm($form, $callback, 'Пост добавлен.')) {
+            return $this->redirectToList();
         }
 
-        return $this->render(':admin/post:add.html.twig', [
+        return $this->responseWithForm($form, ':admin/post:add.html.twig');
+    }
+
+    /**
+     * @Route("/edit/{post}", name="admin_post_edit", methods={"GET", "POST"})
+     */
+    public function editAction(Post $post, Request $request)
+    {
+        $form = $this->handleForm($request, $this->postService->getDTOByPost($post));
+        $callback = function(PostDTO $data) use($post) {
+            $this->postService->update($post, $data);
+        };
+        if ($this->submitForm($form, $callback, 'Пост обновлен.')) {
+            return $this->redirectToList();
+        }
+
+        return $this->responseWithForm($form, ':admin/post:edit.html.twig');
+    }
+
+    /**
+     * @Route("/delete/{post}", name="admin_post_delete", methods={"GET"})
+     */
+    public function deleteAction(Post $post)
+    {
+        $this->postService->remove($post);
+
+        return $this->redirectToList();
+    }
+
+    private function submitForm(FormInterface $form, callable $callback, string $message): bool
+    {
+        if ($form->isSubmitted() && $form->isValid()) {
+            $callback($form->getData());
+            $this->addFlash('success', $message);
+
+            return true;
+        }
+
+        return false;
+    }
+
+    private function handleForm(Request $request, ?PostDTO $postDTO=null): FormInterface
+    {
+        $form = $this->createForm(PostType::class, $postDTO);
+        $form->handleRequest($request);
+
+        return $form;
+    }
+
+    private function responseWithForm(FormInterface $form, string $template)
+    {
+        return $this->render($template, [
             'form' => $form->createView(),
         ]);
+    }
+
+    private function redirectToList()
+    {
+        return $this->redirectToRoute('admin_post_list');
     }
 }

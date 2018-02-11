@@ -1,10 +1,12 @@
 <?php
 
-namespace AppBundle\Tag\Add\Command;
+declare(strict_types=1);
+
+namespace AppBundle\Tag\Form;
 
 use Symfony\Component\Validator\Constraints\NotBlank;
 
-class AddTag
+class TagDTO
 {
     /**
      * @NotBlank()

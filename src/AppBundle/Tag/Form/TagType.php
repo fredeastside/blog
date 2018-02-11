@@ -1,14 +1,15 @@
 <?php
 
-namespace AppBundle\Tag\Add\Form;
+declare(strict_types=1);
 
-use AppBundle\Tag\Add\Command\AddTag;
+namespace AppBundle\Tag\Form;
+
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class AddTagType extends AbstractType
+class TagType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -26,7 +27,7 @@ class AddTagType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => AddTag::class
+            'data_class' => TagDTO::class
         ]);
     }
 }

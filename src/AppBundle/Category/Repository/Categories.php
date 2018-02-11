@@ -8,5 +8,7 @@ interface Categories
 {
     public function save(Category $category);
 
+    public function remove(Category $category);
+
     public function findAll();
 }

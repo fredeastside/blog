@@ -46,8 +46,7 @@ class Category implements Timestampable, Sluggable
     public function __construct(string $name, string $picture)
     {
         $this->posts = new ArrayCollection();
-        $this->name = $name;
-        $this->picture = $picture;
+        $this->update($name, $picture);
     }
 
     public function id()
@@ -67,5 +66,11 @@ class Category implements Timestampable, Sluggable
         }
 
         $this->posts->add($post);
+    }
+
+    public function update(string $name, string $picture)
+    {
+        $this->name = $name;
+        $this->picture = $picture;
     }
 }

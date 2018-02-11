@@ -1,0 +1,23 @@
+{% extends ':admin:table.html.twig' %}
+
+{% import 'components/macros/admin.html.twig' as adminMacros %}
+
+{% block thead %}
+    <th>Название</th>
+    <th>Редактировать</th>
+    <th>Удалить</th>
+{% endblock %}
+
+{% block tbody %}
+    {% for post in posts %}
+        <tr>
+            <td>{{ post.name }}</td>
+            <td>{{ adminMacros.editButton(path('admin_post_edit', { post: post.id })) }}</td>
+            <td>{{ adminMacros.deleteButton(path('admin_post_delete', { post: post.id })) }}</td>
+        </tr>
+    {% endfor %}
+{% endblock %}
+
+{% block footer %}
+    {{ adminMacros.addButton(path('admin_post_add')) }}
+{% endblock %}

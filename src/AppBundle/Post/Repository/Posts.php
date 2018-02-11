@@ -9,4 +9,6 @@ interface Posts
     public function save(Post $post);
 
     public function findAll();
+
+    public function remove(Post $post);
 }

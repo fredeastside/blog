@@ -1,0 +1,11 @@
+{% macro editButton(url) %}
+    <p title="Edit"><a href="{{ url }}" class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-pencil"></span></a></p>
+{% endmacro %}
+
+{% macro addButton(url) %}
+    <div><a href="{{ url }}" class="btn-default btn">Добавить</a></div>
+{% endmacro %}
+
+{% macro deleteButton(url) %}
+    <p title="Delete"><a href="{{ url }}" class="btn btn-danger btn-xs" onclick="return confirm('Are you sure you want to Remove?');"><span class="glyphicon glyphicon-trash"></span></a></p>
+{% endmacro %}
