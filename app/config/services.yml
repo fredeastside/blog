@@ -42,6 +42,10 @@ services:
         tags:
             - { name: doctrine.event_subscriber }
 
+    AppBundle\Post\EventListener\MarkdownToHTMLSubscriber:
+        tags:
+            - { name: doctrine.event_subscriber }
+
     AppBundle\User\EventListener\SendActivationCodeSubscriber:
         tags:
             - { name: kernel.event_subscriber }

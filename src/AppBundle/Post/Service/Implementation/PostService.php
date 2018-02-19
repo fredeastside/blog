@@ -35,12 +35,21 @@ class PostService implements PostServiceInterface
 
     public function getDTOByPost(Post $post)
     {
-        // TODO: Implement getDTOByPost() method.
+        $postDTO = new PostDTO();
+        $postDTO->name = $post->name();
+        $postDTO->category = $post->category();
+        $postDTO->content = $post->content();
+        $postDTO->description = $post->description();
+        $postDTO->tags = $post->tags();
+
+        return $postDTO;
     }
 
-    public function update(Post $post, PostDTO $data)
+    public function update(Post $post, PostDTO $postDTO)
     {
-        // TODO: Implement update() method.
+        $post->update($postDTO);
+        $post->addUser($this->getUser());
+        $this->posts->save($post);
     }
 
     public function remove(Post $post)

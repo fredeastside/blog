@@ -7,6 +7,8 @@ use AppBundle\Common\Entity\Sluggable;
 use AppBundle\Common\Entity\Implementation\Sluggable as SluggableTrait;
 use AppBundle\Common\Entity\Timestampable;
 use AppBundle\Common\Entity\Implementation\Timestampable as TimestampableTrait;
+use AppBundle\Common\Event\DomainEvents;
+use AppBundle\Common\Event\DomainEventsPublisher;
 use AppBundle\Post\Form\PostDTO;
 use AppBundle\Tag\Entity\Tag;
 use AppBundle\User\Entity\User;
@@ -25,10 +27,11 @@ use Doctrine\ORM\Mapping\{
  * @Entity()
  * @Table(name="posts")
  */
-class Post implements Timestampable, Sluggable
+class Post implements Timestampable, Sluggable, DomainEventsPublisher
 {
     use TimestampableTrait;
     use SluggableTrait;
+    use DomainEvents;
 
     /**
      * @Id()
@@ -52,6 +55,11 @@ class Post implements Timestampable, Sluggable
      * @ManyToMany(targetEntity="AppBundle\Tag\Entity\Tag", mappedBy="posts", orphanRemoval=true)
      */
     private $tags;
+
+    /**
+     * @Column(type="text")
+     */
+    private $description;
 
     /**
      * @Column(type="text")
@@ -88,15 +96,21 @@ class Post implements Timestampable, Sluggable
         return $this->content;
     }
 
-    public static function create(PostDTO $addPost)
+    public static function create(PostDTO $postDTO)
     {
         $post = new self();
-        $post->name = $addPost->name;
-        $post->content = $addPost->content;
-        $post->addTags($addPost->tags);
-        $post->addCategory($addPost->category);
+        $post->update($postDTO);
 
         return $post;
+    }
+
+    public function update(PostDTO $postDTO)
+    {
+        $this->name = $postDTO->name;
+        $this->updateContent($postDTO->content);
+        $this->description = $postDTO->description;
+        $this->addTags($postDTO->tags);
+        $this->addCategory($postDTO->category);
     }
 
     public function addUser(User $user)
@@ -131,5 +145,19 @@ class Post implements Timestampable, Sluggable
     public function getCategoryName()
     {
         return $this->category->name();
+    }
+
+    public function description()
+    {
+        return $this->description;
+    }
+
+    public function updateContent(string $newContent)
+    {
+        if ($this->content === $newContent) {
+            return;
+        }
+
+        $this->content = $newContent;
     }
 }

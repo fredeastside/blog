@@ -32,7 +32,12 @@ class PostType extends AbstractType
                     'class' => 'js-select2-multiple',
                 ]
             ])
-            ->add('content', TextareaType::class)
+            ->add('description', TextareaType::class)
+            ->add('content', TextareaType::class, [
+                'attr' => [
+                    'class' => 'js-markdown'
+                ]
+            ])
             ->add('save', SubmitType::class, [
                 'attr' => [
                     'formnovalidate' => 'formnovalidate',

@@ -21,6 +21,11 @@ class PostDTO
     /**
      * @NotBlank()
      */
+    public $description;
+
+    /**
+     * @NotBlank()
+     */
     public $category;
 
     /**

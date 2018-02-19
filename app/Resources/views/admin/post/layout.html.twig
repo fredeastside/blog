@@ -1,0 +1,29 @@
+{% extends '::two_column_layout.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/bootstrap-markdown.min.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/css/select2.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2-bootstrap-theme/0.1.0-beta.10/select2-bootstrap.min.css" />
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src='{{ asset('js/vendor/markdown.js') }}'></script>
+    <script src='{{ asset('js/vendor/to-markdown.js') }}'></script>
+    <script src='{{ asset('js/vendor/bootstrap-markdown.js') }}'></script>
+    <script src='{{ asset('js/vendor/bootstrap-markdown.ru.js') }}'></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/js/select2.min.js"></script>
+    <script>
+        $(function () {
+            $(".js-markdown").markdown({
+                height: 480,
+                language: "ru"
+            });
+            $('.js-select2').select2();
+            $('.js-select2-multiple').select2({
+                multiple: true
+            });
+        });
+    </script>
+{% endblock %}

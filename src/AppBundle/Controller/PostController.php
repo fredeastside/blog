@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Post\Entity\Post;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
@@ -13,8 +14,10 @@ class PostController extends AbstractController
     /**
      * @Route("/{slug}", name="post_detail")
      */
-    public function detailAction()
+    public function detailAction(Post $post)
     {
-        return $this->render(':post:detail.html.twig');
+        return $this->render(':post:detail.html.twig', [
+            'post' => $post,
+        ]);
     }
 }
