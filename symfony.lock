@@ -77,6 +77,9 @@
     "gedmo/doctrine-extensions": {
         "version": "v2.4.33"
     },
+    "gumlet/php-image-resize": {
+        "version": "1.8.0"
+    },
     "guzzlehttp/guzzle": {
         "version": "6.3.0"
     },

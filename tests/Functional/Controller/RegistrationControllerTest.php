@@ -6,7 +6,7 @@ use Doctrine\Common\DataFixtures\Purger\ORMPurger;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Response;
 
-class RegistrationTest extends WebTestCase
+class RegistrationControllerTest extends WebTestCase
 {
     private $client;
     private $router;

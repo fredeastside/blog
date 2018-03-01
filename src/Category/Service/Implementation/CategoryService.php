@@ -4,34 +4,33 @@ declare(strict_types=1);
 
 namespace App\Category\Service\Implementation;
 
-use App\Category\Add\Command\AddCategory;
 use App\Category\Entity\Category;
 use App\Category\Form\CategoryDTO;
 use App\Category\Repository\Categories;
-use App\Common\Service\FileUpload;
 use App\Category\Service\CategoryService as CategoryServiceInterface;
+use App\Category\Service\UploadPicture;
 
 class CategoryService implements CategoryServiceInterface
 {
     private $categories;
-    private $fileUpload;
+    private $uploadPicture;
 
-    public function __construct(Categories $categories, FileUpload $fileUpload)
+    public function __construct(Categories $categories, UploadPicture $uploadPicture)
     {
         $this->categories = $categories;
-        $this->fileUpload = $fileUpload;
+        $this->uploadPicture = $uploadPicture;
     }
 
     public function add(CategoryDTO $categoryDTO)
     {
-        $fileName = $this->fileUpload->upload($categoryDTO->picture);
+        $fileName = $this->uploadPicture->upload($categoryDTO->picture);
         $category = new Category($categoryDTO->name, $fileName);
         $this->categories->save($category);
     }
 
     public function remove(Category $category)
     {
-        $this->fileUpload->removeByPath($category->picture());
+        $this->uploadPicture->remove($category);
         $this->categories->remove($category);
     }
 
@@ -42,8 +41,8 @@ class CategoryService implements CategoryServiceInterface
 
     public function update(Category $category, CategoryDTO $categoryDTO)
     {
-        $this->fileUpload->removeByPath($category->picture());
-        $fileName = $this->fileUpload->upload($categoryDTO->picture);
+        $this->uploadPicture->remove($category);
+        $fileName = $this->uploadPicture->upload($categoryDTO->picture);
         $category->update($categoryDTO->name, $fileName);
         $this->categories->save($category);
     }
@@ -52,7 +51,7 @@ class CategoryService implements CategoryServiceInterface
     {
         $dto = new CategoryDTO();
         $dto->name = $category->name();
-        $dto->picture = $this->fileUpload->getFileByName($category->picture());
+        $dto->picture = $this->uploadPicture->getPictureFile($category);
 
         return $dto;
     }

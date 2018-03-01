@@ -11,6 +11,8 @@ interface FileUpload
 
     public function getFileByName(string $fileName): File;
 
+    public function getFilePathByName(string $fileName): string;
+
     public function remove(UploadedFile $file);
 
     public function removeByPath(string $path);

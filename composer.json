@@ -28,6 +28,7 @@
         "doctrine/doctrine-cache-bundle": "^1.2",
         "doctrine/doctrine-migrations-bundle": "^1.2",
         "doctrine/orm": "^2.5",
+        "gumlet/php-image-resize": "^1.8",
         "guzzlehttp/guzzle": "~6.0",
         "knplabs/knp-markdown-bundle": "^1.7",
         "sensio/framework-extra-bundle": "^3.0.2",

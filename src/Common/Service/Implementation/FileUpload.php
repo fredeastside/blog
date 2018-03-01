@@ -26,7 +26,7 @@ class FileUpload implements FileUploadInterface
 
     public function getFileByName(string $fileName): File
     {
-        return new File($this->uploadDirectory.DIRECTORY_SEPARATOR.$fileName);
+        return new File($this->getFilePathByName($fileName));
     }
 
     public function remove(UploadedFile $file): bool
@@ -45,5 +45,10 @@ class FileUpload implements FileUploadInterface
         }
 
         return false;
+    }
+
+    public function getFilePathByName(string $fileName): string
+    {
+        return $this->uploadDirectory.DIRECTORY_SEPARATOR.$fileName;
     }
 }
