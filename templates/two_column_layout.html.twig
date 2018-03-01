@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {% include 'components/no_js_menu.html.twig' %}
+    <main class="container left-container">
+        <div class="row">
+            {% include 'components/main_menu.html.twig' %}
+            <section class="sidebar col-md-5 col-sm-12"
+                     style='background-image: url({{ asset('img/feature-san-fran.jpg') }});'>
+
+                {% include 'components/burger.html.twig' %}
+
+                <div class="site-info">
+                    <div class="primary-info">
+                        <h1>fredrsf.ru</h1>
+                        <p>Блог о программировании и разработке веб-приложений.</p>
+
+                    </div>
+                    <div class="secondary-info">
+                        <p>
+                            <a class="btn btn-primary" href="{{ path('subscription') }}"><i class="fa fa-user-plus"></i>Подписка на публикации</a>
+                        </p>
+                    </div>
+
+                </div>
+            </section><!-- end sidebar -->
+            <div class="col-md-7 col-sm-12 col-md-offset-5 main-content">
+                {% for msg in app.session.flashBag.get('success') %}
+                    <div class="alert alert-success">
+                        {{ msg }}
+                    </div>
+                {% endfor %}
+                {% block content %}{% endblock %}
+                <footer class="split-footer">
+                    <a href="{{ path('homepage_about') }}">Об авторе</a>
+                    <i class="link-spacer"></i>
+                    <a href="{{ path('homepage_index') }}">copyright &copy; {{ "now"|date("Y") }}</a>
+                </footer>
+            </div><!-- main content -->
+        </div><!--/row -->
+    </main><!-- /container -->
+{% endblock %}

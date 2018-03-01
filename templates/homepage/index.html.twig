@@ -1,0 +1,36 @@
+{% extends 'two_column_layout.html.twig' %}
+
+{% block content %}
+    <div class="sub-nav">
+        <a href="#" class="select-posts active">Публикации</a>
+        <a href="#" class="select-categories">Категории</a>
+    </div>
+    <div class="home-page-posts animated fadeIn ">
+        {% for post in posts %}
+            <article class="post">
+            <div class="post-preview col-xs-12  no-gutter">
+                <h2><a href="{{ path('post_detail', { slug: post.slug }) }}">{{ post.name }}</a></h2>
+                <p>{{ post.description }}</p>
+                <p class="meta">
+                    {#<a href="/author/michelle">Michelle jones</a> in #}<a href='{{ path('post_detail', { slug: post.slug }) }}'>{{ post.getCategoryName }}</a>
+                    <i class="link-spacer"></i> <i class="fa fa-bookmark"></i> {{ post.created|date('d-m-Y H:i') }}
+                </p>
+            </div>
+        </article>
+        {% endfor %}
+    </div><!-- Home page posts -->
+    <div class="home-page-categories hide animated fadeIn ">
+        <div class="category row">
+            <section>
+                {% for category in categories %}
+                    <div class="category-preview col-xs-6 col-sm-4 ">
+                        <h2>{{ category.name }}</h2>
+                        <a href='{{ path('homepage_index') }}'>
+                            <img src='{{ asset('upload/' ~ category.picture) }}' alt="{{ category.name }}">
+                        </a>
+                    </div>
+                {% endfor %}
+            </section>
+        </div>
+    </div>
+{% endblock %}

@@ -9,9 +9,9 @@ services:
         public: false
 
     AppBundle\:
-        resource: '../../src/AppBundle/*'
-        #exclude: '../../src/AppBundle/{DataFixtures, Category}'
-        exclude: '../../src/AppBundle/{Category/Entity,Tag/Entity,DataFixtures}'
+        resource: '../../src/*'
+        exclude: '../../src/{AppBundle}'
+        #exclude: '../../src/AppBundle/{AppBundle,Category/Entity,Tag/Entity,DataFixtures}'
 
     AppBundle\Controller\:
         resource: '../../src/AppBundle/Controller'

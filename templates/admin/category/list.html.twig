@@ -1,0 +1,25 @@
+{% extends 'admin/table.html.twig' %}
+
+{% import 'components/macros/admin.html.twig' as adminMacros %}
+
+{% block thead %}
+    <th>Название</th>
+    <th>URL</th>
+    <th>Редактировать</th>
+    <th>Удалить</th>
+{% endblock %}
+
+{% block tbody %}
+    {% for category in categories %}
+        <tr>
+            <td>{{ category.name }}</td>
+            <td>{{ category.slug }}</td>
+            <td>{{ adminMacros.editButton(path('admin_category_edit', { category: category.id })) }}</td>
+            <td>{{ adminMacros.deleteButton(path('admin_category_delete', { category: category.id })) }}</td>
+        </tr>
+    {% endfor %}
+{% endblock %}
+
+{% block footer %}
+    {{ adminMacros.addButton(path('admin_category_add')) }}
+{% endblock %}

@@ -1,0 +1,52 @@
+doctrine:
+    dbal:
+        driver:   pdo_mysql
+        host:     "%env(DATABASE_HOST)%"
+        port:     "%env(DATABASE_PORT)%"
+        dbname:   "%env(DATABASE_NAME)%"
+        user:     "%env(DATABASE_USER)%"
+        password: "%env(DATABASE_PASSWORD)%"
+        charset:  utf8mb4
+        default_table_options:
+            charset: utf8mb4
+            collate: utf8mb4_unicode_ci
+        # if using pdo_sqlite as your database driver:
+        #   1. add the path in parameters.yml
+        #     e.g. database_path: "%kernel.root_dir%/../var/data/data.sqlite"
+        #   2. Uncomment database_path in parameters.yml.dist
+        #   3. Uncomment next line:
+        #path:     "%database_path%"
+
+    orm:
+        auto_generate_proxy_classes: "%kernel.debug%"
+        naming_strategy: doctrine.orm.naming_strategy.underscore
+        #auto_mapping: true
+        mappings:
+            User:
+                type: annotation
+                dir: "%kernel.project_dir%/src/User/Entity"
+                prefix: App\User\Entity
+                alias: User
+                is_bundle: false
+            Category:
+                type: annotation
+                dir: "%kernel.project_dir%/src/Category/Entity"
+                prefix: App\Category\Entity
+                alias: Category
+                is_bundle: false
+            Post:
+                type: annotation
+                dir: "%kernel.project_dir%/src/Post/Entity"
+                prefix: App\Post\Entity
+                alias: Post
+                is_bundle: false
+            Tag:
+                type: annotation
+                dir: "%kernel.project_dir%/src/Tag/Entity"
+                prefix: App\Tag\Entity
+                alias: Tag
+                is_bundle: false
+        filters:
+            select_only_active:
+                class: App\Common\Doctrine\Filters\SelectOnlyActive
+                enabled: true
