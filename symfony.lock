@@ -110,6 +110,15 @@
     "ocramius/proxy-manager": {
         "version": "2.2.0"
     },
+    "paragonie/random_compat": {
+        "version": "v2.0.11"
+    },
+    "phar-io/manifest": {
+        "version": "1.0.1"
+    },
+    "phar-io/version": {
+        "version": "1.0.1"
+    },
     "phpdocumentor/reflection-common": {
         "version": "1.0.1"
     },
@@ -185,6 +194,9 @@
     "sebastian/object-enumerator": {
         "version": "2.0.1"
     },
+    "sebastian/object-reflector": {
+        "version": "1.1.1"
+    },
     "sebastian/recursion-context": {
         "version": "2.0.0"
     },
@@ -218,6 +230,9 @@
     "symfony/asset": {
         "version": "v4.0.4"
     },
+    "symfony/browser-kit": {
+        "version": "v4.0.6"
+    },
     "symfony/cache": {
         "version": "v4.0.4"
     },
@@ -233,6 +248,9 @@
             "ref": "c646e4b71af082e94b5014daca36ef6812bad076"
         }
     },
+    "symfony/css-selector": {
+        "version": "v4.0.6"
+    },
     "symfony/debug": {
         "version": "v4.0.4"
     },
@@ -241,6 +259,9 @@
     },
     "symfony/doctrine-bridge": {
         "version": "v4.0.4"
+    },
+    "symfony/dom-crawler": {
+        "version": "v4.0.6"
     },
     "symfony/dotenv": {
         "version": "v4.0.4"
@@ -326,7 +347,16 @@
     "symfony/polyfill-mbstring": {
         "version": "v1.7.0"
     },
+    "symfony/polyfill-php56": {
+        "version": "v1.7.0"
+    },
+    "symfony/polyfill-php70": {
+        "version": "v1.7.0"
+    },
     "symfony/polyfill-php72": {
+        "version": "v1.7.0"
+    },
+    "symfony/polyfill-util": {
         "version": "v1.7.0"
     },
     "symfony/profiler-pack": {
@@ -424,6 +454,9 @@
     },
     "symfony/yaml": {
         "version": "v4.0.4"
+    },
+    "theseer/tokenizer": {
+        "version": "1.1.0"
     },
     "twig/twig": {
         "version": "v2.4.4"

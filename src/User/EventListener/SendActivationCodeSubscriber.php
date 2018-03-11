@@ -37,7 +37,7 @@ class SendActivationCodeSubscriber implements EventSubscriberInterface
             ->setTo($sendActivationCode->email())
             ->setBody(
                 $this->templating->render(
-                    ':Emails:registration.html.twig',
+                    'Emails/registration.html.twig',
                     [
                         'url' => $url,
                     ]

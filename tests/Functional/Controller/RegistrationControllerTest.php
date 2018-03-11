@@ -2,23 +2,11 @@
 
 namespace AppBundle\Action;
 
-use Doctrine\Common\DataFixtures\Purger\ORMPurger;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use App\Tests\Functional\AppWebTestCase;
 use Symfony\Component\HttpFoundation\Response;
 
-class RegistrationControllerTest extends WebTestCase
+class RegistrationControllerTest extends AppWebTestCase
 {
-    private $client;
-    private $router;
-
-    protected function setUp()
-    {
-        $this->client = static::createClient();
-        $this->router = $this->client->getContainer()->get('router');
-        $purger = new ORMPurger($this->client->getContainer()->get('doctrine.orm.entity_manager'));
-        $purger->purge();
-    }
-
     /**
      * @test
      */
