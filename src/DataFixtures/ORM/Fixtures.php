@@ -16,5 +16,7 @@ class Fixtures extends Fixture
         $objects = $loader->loadFile(__DIR__.'/../fixtures.yml');
         $persister = new Persister($manager);
         $persister->persist($objects->getObjects());
+
+        return $objects->getObjects();
     }
 }

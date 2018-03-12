@@ -9,7 +9,7 @@ use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;
 
 class MainAuthenticatorHandlerDecorator implements AuthenticatorHandler
 {
-    private const MAIN_PROVIDER_KEY = 'main';
+    public const MAIN_PROVIDER_KEY = 'main';
 
     private $guardAuthenticatorHandler;
     private $authenticator;
