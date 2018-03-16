@@ -2,6 +2,7 @@
 
 namespace App\Post\Repository;
 
+use App\Category\Entity\Category;
 use App\Post\Entity\Post;
 
 interface Posts
@@ -11,4 +12,6 @@ interface Posts
     public function findAll();
 
     public function remove(Post $post);
+
+    public function findByCategory(Category $category);
 }

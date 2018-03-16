@@ -5,6 +5,12 @@
     "behat/transliterator": {
         "version": "v1.2.0"
     },
+    "deployer/deployer": {
+        "version": "v6.1.0"
+    },
+    "deployer/phar-update": {
+        "version": "v2.1.0"
+    },
     "doctrine/annotations": {
         "version": "1.0",
         "recipe": {
@@ -157,6 +163,9 @@
     },
     "phpunit/phpunit-mock-objects": {
         "version": "3.4.4"
+    },
+    "pimple/pimple": {
+        "version": "v3.2.3"
     },
     "psr/cache": {
         "version": "1.0.1"
@@ -358,6 +367,9 @@
     },
     "symfony/polyfill-util": {
         "version": "v1.7.0"
+    },
+    "symfony/process": {
+        "version": "v4.0.6"
     },
     "symfony/profiler-pack": {
         "version": "v1.0.3"

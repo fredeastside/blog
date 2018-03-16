@@ -1,10 +1,10 @@
 {% extends 'one_column_layout.html.twig' %}
 
 {% block content %}
+    <h1>{{ post.name }}</h1>
     <p class="meta">
         {#<a href="/author/michelle">Michelle jones</a> in #}<a href='{{ path('post_detail', { slug: post.slug }) }}'>{{ post.getCategoryName }}</a>
         <i class="link-spacer"></i> <i class="fa fa-bookmark"></i> {{ post.created|date('d-m-Y H:i') }}
     </p>
-    <h1>{{ post.name }}</h1>
     {{ post.content|raw }}
 {% endblock %}

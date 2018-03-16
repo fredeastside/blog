@@ -2,6 +2,7 @@
 
 namespace App\Post\Repository\Implementation;
 
+use App\Category\Entity\Category;
 use App\Common\Repository\Implementation\Repository;
 use App\Post\Entity\Post;
 use App\Post\Repository\Posts as PostsInterface;
@@ -28,5 +29,10 @@ class Posts extends Repository implements PostsInterface
     {
         $this->em->remove($post);
         $this->em->flush();
+    }
+
+    public function findByCategory(Category $category)
+    {
+        return $this->repository->findAll();
     }
 }

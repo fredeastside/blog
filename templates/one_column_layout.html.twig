@@ -1,7 +1,8 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <header class="hero-image" style="background-image: url('{{ asset('img/postbg' ~ random(9) ~ '.jpg') }}');">
+    {#<header class="hero-image" style="background-image: url('{{ asset('img/postbg' ~ random(9) ~ '.jpg') }}');">#}
+    <header>
         {% include 'components/burger.html.twig' %}
         {% include 'components/no_js_menu.html.twig' %}
         {% include 'components/main_menu.html.twig' %}
