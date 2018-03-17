@@ -22,7 +22,10 @@ class Posts extends Repository implements PostsInterface
 
     public function findAll()
     {
-        return $this->repository->findAll();
+        return $this->createDefaultQB()
+            ->getQuery()
+            ->execute()
+            ;
     }
 
     public function remove(Post $post)
@@ -33,6 +36,19 @@ class Posts extends Repository implements PostsInterface
 
     public function findByCategory(Category $category)
     {
-        return $this->repository->findAll();
+        return $this->createDefaultQB()
+            ->andWhere('post.category = :category')
+            ->setParameter('category', $category)
+            ->getQuery()
+            ->execute()
+        ;
+    }
+
+    private function createDefaultQB()
+    {
+        $qb = $this->repository->createQueryBuilder('post');
+        $qb->addOrderBy('post.created', 'DESC');
+
+        return $qb;
     }
 }

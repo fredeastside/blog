@@ -20,12 +20,13 @@ use Doctrine\ORM\Mapping\{
     GeneratedValue,
     Column,
     ManyToOne,
-    ManyToMany
+    ManyToMany,
+    Index
 };
 
 /**
  * @Entity()
- * @Table(name="posts")
+ * @Table(name="posts", indexes={ @Index(name="posts_created_idx", columns={"created"}) })
  */
 class Post implements Timestampable, Sluggable, DomainEventsPublisher
 {
