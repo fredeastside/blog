@@ -211,7 +211,6 @@ td, th {
 
     .table {
         border-collapse: collapse !important;
-        font-size: 18px;
     }
 
     .table-bordered th, .table-bordered td {
@@ -1889,6 +1888,7 @@ th {
     text-align: left; }
 
 .table {
+    font-size: 18px;
     width: 100%;
     max-width: 100%;
     margin-bottom: 20px; }
