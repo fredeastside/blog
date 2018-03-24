@@ -8,6 +8,7 @@
         <meta name="description" content="">
         {% block stylesheets %}
             <link rel="stylesheet" href="{{ asset('css/main.css') }}">
+            <link rel="stylesheet" href="{{ asset('css/prism.css') }}">
         {% endblock %}
         <link rel="canonical" href="/">
         <!--[if lt IE 9]>
@@ -22,6 +23,7 @@
             <script src="{{ asset('js/vendor/jquery-1.11.2.min.js') }}"></script>
             <script src='{{ asset('js/vendor/jquery.jpanelmenu.min.js') }}'></script>
             <script src='{{ asset('js/vendor/fastclick.min.js') }}'></script>
+            <script src='{{ asset('js/vendor/prism.js') }}'></script>
             <script src='{{ asset('js/main.js') }}'></script>
         {% endblock %}
     </body>
