@@ -22,6 +22,7 @@ class CategoryController extends AbstractController
         $posts = $posts->findByCategory($category);
 
         return $this->render('category/detail.html.twig', [
+            'category' => $category,
             'posts' => $posts,
         ]);
     }

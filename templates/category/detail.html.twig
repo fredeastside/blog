@@ -1,5 +1,6 @@
 {% extends 'two_column_layout.html.twig' %}
 
 {% block content %}
+    <h1>{{ category.name }}</h1>
     {% include 'components/posts_list.html.twig' with { posts: posts } %}
 {% endblock %}
