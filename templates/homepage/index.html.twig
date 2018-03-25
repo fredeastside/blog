@@ -6,18 +6,7 @@
         <a href="#" class="select-categories">Категории</a>
     </div>
     <div class="home-page-posts animated fadeIn ">
-        {% for post in posts %}
-            <article class="post">
-                <div class="post-preview col-xs-12  no-gutter">
-                    <h2><a href="{{ path('post_detail', { slug: post.slug }) }}">{{ post.name }}</a></h2>
-                    <p>{{ post.description }}</p>
-                    <p class="meta">
-                        {#<a href="/author/michelle">Michelle jones</a> in #}<a href='{{ path('post_detail', { slug: post.slug }) }}'>{{ post.getCategoryName }}</a>
-                        <i class="link-spacer"></i> <i class="fa fa-bookmark"></i> {{ post.created|date('d-m-Y H:i') }}
-                    </p>
-                </div>
-            </article>
-        {% endfor %}
+        {% include 'components/posts_list.html.twig' with { posts: posts } %}
     </div><!-- Home page posts -->
     <div class="home-page-categories hide animated fadeIn ">
         <div class="category row">

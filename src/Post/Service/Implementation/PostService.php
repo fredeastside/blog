@@ -40,7 +40,7 @@ class PostService implements PostServiceInterface
         $postDTO->category = $post->category();
         $postDTO->content = $post->content();
         $postDTO->description = $post->description();
-        $postDTO->tags = $post->tags();
+        $postDTO->tags = clone $post->tags();
 
         return $postDTO;
     }

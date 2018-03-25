@@ -15,4 +15,4 @@ Install [Docker](https://www.docker.com/).
   - `composer install --prefer-source --no-interaction`
   - `sf doctrine:migrations:migrate --no-interaction`
   
-4. Open in your browser `http://localhost:8080/`
+4. Open in your browser `http://localhost/`

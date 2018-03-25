@@ -58,6 +58,7 @@ class PostController extends AbstractController
     public function editAction(Post $post, Request $request)
     {
         $form = $this->handleForm($request, $this->postService->getDTOByPost($post));
+
         $callback = function(PostDTO $data) use($post) {
             $this->postService->update($post, $data);
         };

@@ -21,7 +21,8 @@ use Doctrine\ORM\Mapping\{
     Column,
     ManyToOne,
     ManyToMany,
-    Index
+    Index,
+    JoinTable
 };
 
 /**
@@ -53,7 +54,8 @@ class Post implements Timestampable, Sluggable, DomainEventsPublisher
     private $category;
 
     /**
-     * @ManyToMany(targetEntity="App\Tag\Entity\Tag", mappedBy="posts", orphanRemoval=true)
+     * @ManyToMany(targetEntity="App\Tag\Entity\Tag", inversedBy="posts", fetch="EXTRA_LAZY")
+     * @JoinTable(name="posts_tags")
      */
     private $tags;
 
@@ -122,6 +124,7 @@ class Post implements Timestampable, Sluggable, DomainEventsPublisher
 
     private function addTags(iterable $tags)
     {
+        $this->tags->clear();
         foreach ($tags as $tag) {
             $this->addTag($tag);
         }

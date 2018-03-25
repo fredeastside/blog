@@ -12,8 +12,7 @@ use Doctrine\ORM\Mapping\{
     Id,
     GeneratedValue,
     Column,
-    ManyToMany,
-    JoinTable
+    ManyToMany
 };
 
 /**
@@ -32,8 +31,7 @@ class Tag implements Sluggable
     private $id;
 
     /**
-     * @ManyToMany(targetEntity="App\Post\Entity\Post", inversedBy="tags")
-     * @JoinTable(name="posts_tags")
+     * @ManyToMany(targetEntity="App\Post\Entity\Post", mappedBy="tags")
      */
     private $posts;
 
