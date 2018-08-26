@@ -26,10 +26,14 @@ services:
             - ${APP_PATH}:/var/www/application:cached
             - ./docker/logs/app:/var/www/application/var/logs
     nginx:
-        build: ./docker/nginx
+        image: nginx:latest
         ports:
-            - 80:80
+            - "80:80"
+            - "443:443"
+        volumes:
+            - ./docker/nginx/hosts:/etc/nginx/conf.d
+            - ./docker/logs/nginx:/var/log/nginx
         volumes_from:
             - php
-        volumes:
-            - ./docker/logs/nginx:/var/log/nginx
+#        links:
+#            - php
